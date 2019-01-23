@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[Friends]
+(
+	[ID] INT NOT NULL IDENTITY,
+	[SUID] INT NOT NULL,
+	[GUID] INT NOT NULL,
+    CONSTRAINT [pk_friends] PRIMARY KEY ([ID]), 
+    CONSTRAINT [FK_Friends_ToUserSend] FOREIGN KEY ([SUID]) REFERENCES [User]([ID]), 
+    CONSTRAINT [FK_Friends_ToUserGet] FOREIGN KEY ([GUID]) REFERENCES [User]([ID]), 
+)

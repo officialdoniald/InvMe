@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <x:Int32 x:Key="NormalFontSize">16</x:Int32> 
+            <x:Int32 x:Key="CommentFontSize">13</x:Int32>
+            <x:Int32 x:Key="NormalButtonSize">39</x:Int32>
+            <x:String x:Key="NormalFontColor">Black</x:String>
+            <x:String x:Key="PictureFontColor">White</x:String>
+            <x:String x:Key="HyperLinkFontColor">Black</x:String>
+            <x:String x:Key="ButtonBackgroundColor">#CFB2AA</x:String>
+            
+            <Style TargetType="StackLayout" ApplyToDerivedTypes="true">
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            <Style TargetType="NavigationPage" ApplyToDerivedTypes="true">
+                <Setter Property="BarBackgroundColor" Value="#CFB2AA"/>
+                <Setter Property="BarTextColor" Value="White"/>
+            </Style>
+            <Style TargetType="ListView" ApplyToDerivedTypes="true">
+                <Setter Property="SeparatorColor" Value="Gray"/>
+            </Style>
+            <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="true">
+                <Setter Property="HorizontalOptions" Value="Center"></Setter>
+                <Setter Property="Color" Value="{StaticResource NormalFontColor}"></Setter>
+            </Style>
+            <Style TargetType="Switch" ApplyToDerivedTypes="true">
+                <Setter Property="Margin" Value="0,0,15,0"/>
+                <Setter Property="HorizontalOptions" Value="End"></Setter>
+            </Style>
+            <Style TargetType="DatePicker" ApplyToDerivedTypes="true">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="15,0,15,0"/>
+            </Style>
+            <Style TargetType="TimePicker" ApplyToDerivedTypes="true">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="15,0,15,0"/>
+            </Style>
+            
+            <Style TargetType="Label" x:Key="CommentLabelStyle">
+                <Setter Property="FontSize" Value="{StaticResource CommentFontSize}"/>
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="Margin" Value="15,0,0,0"/>
+            </Style>
+            <Style TargetType="Label" x:Key="NormalLabelStyle">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
+                <Setter Property="Margin" Value="15,0,0,0"/>
+            </Style>
+            <Style TargetType="Label" x:Key="LinkLabelStyle">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
+                <Setter Property="Margin" Value="15,0,0,0"/>
+            </Style>
+            <Style TargetType="Entry" x:Key="NormalEntryStyle">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="HeightRequest" Value="50"/> 
+                <Setter Property="Margin" Value="15,0,15,0"/>
+            </Style>
+            <Style TargetType="Button" x:Key="NormalButtonStyle">
+                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="HeightRequest" Value="{StaticResource NormalButtonSize}"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonBackgroundColor}"/>
+                <Setter Property="BorderColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
+                <Setter Property="Margin" Value="15,0,15,0"/>
+                <Setter Property="BorderRadius" Value="20"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

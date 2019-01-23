@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.View.UserDescriptionPage"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="updateToolbarItem" Activated="UpdateToolbarItem_Activated" Order="Primary" Text="Update"/>
+        <ToolbarItem Name="settingsToolbarItem" Activated="SettingsToolbarItem_Activated" Order="Primary" Text="Settings"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="0,25,0,0">
+                <controls:CircleImage x:Name="profilepictureImage" HorizontalOptions="Center" Aspect="AspectFill">
+                    <controls:CircleImage.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.WidthRequest>
+                    <controls:CircleImage.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.HeightRequest>
+                </controls:CircleImage>
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,25,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                            <!--<ColumnDefinition></ColumnDefinition>-->
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Source="name.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                        <Label Text="Name:" x:Name="firstnameLabel" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <Image Source="borndate.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"></Image>
+                        <Label Text="Born date:" x:Name="bornDateLabel" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <!--<Image Source="email.png" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"></Image>-->
+                        <!--<Label x:Name="emailLabel" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>-->
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

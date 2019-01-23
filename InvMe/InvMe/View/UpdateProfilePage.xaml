@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.View.UpdateProfilePage"
+             Title="Update profile"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <ActivityIndicator x:Name="updateProfileActivator" IsRunning="false"></ActivityIndicator>
+
+                <Button Text="Gallery" x:Name="galleryButton" Clicked="GalleryButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
+                <controls:CircleImage x:Name="profilePictureImage" HorizontalOptions="Center" Aspect="AspectFill">
+                    <controls:CircleImage.WidthRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.WidthRequest>
+                    <controls:CircleImage.HeightRequest>
+                        <OnPlatform x:TypeArguments="x:Double">
+                            <On Platform="Android, iOS">75</On>
+                        </OnPlatform>
+                    </controls:CircleImage.HeightRequest>
+                </controls:CircleImage>
+                <Button Text="Update profile picture" x:Name="updateProfilePictureButton" Clicked="UpdateProfilePictureButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+
+                <Label Text="Firstname" Style="{StaticResource CommentLabelStyle}"></Label>
+                <Entry x:Name="firstnameEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+                <Label Text="Lastname" Style="{StaticResource CommentLabelStyle}"></Label>
+                <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+                <Label Text="Borndate" Style="{StaticResource CommentLabelStyle}"></Label>
+                <DatePicker Format="d/MM/yyyy" x:Name="bornPicker"></DatePicker>
+                <Button Text="Update profile" x:Name="updateProfil" Clicked="UpdateProfil_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+
+                <Label Text="Email" Style="{StaticResource CommentLabelStyle}"></Label>
+                <Entry Keyboard="Email" x:Name="emailEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+                <Button Text="Update Email" x:Name="updateEmail" Clicked="UpdateEmail_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+
+                <Label Text="Old password" Style="{StaticResource CommentLabelStyle}"></Label>
+                <Entry x:Name="originalpasswordEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+                <Label Text="New password" Style="{StaticResource CommentLabelStyle}"></Label>
+                <Entry x:Name="passwordEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+                <Button Text="Update password" x:Name="updatePasswordButton" Clicked="UpdatePasswordButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

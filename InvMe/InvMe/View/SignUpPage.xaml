@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.View.SignUpPage"
+             Title="Sign Up">
+    <ScrollView>
+        <StackLayout Margin="0,25,0,0">
+            <Label Text="Firstname:" Style="{StaticResource CommentLabelStyle}"></Label>
+            <Entry x:Name="firstnameEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+            <Label Text="Lastname:" Style="{StaticResource CommentLabelStyle}"></Label>
+            <Entry x:Name="lastnameEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+            <Label Text="E-Mail:" Style="{StaticResource CommentLabelStyle}"></Label>
+            <Entry Keyboard="Email" x:Name="emailEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+            <Label Text="Password:" Style="{StaticResource CommentLabelStyle}"></Label>
+            <Entry IsPassword="True" x:Name="passwordEntry" Style="{StaticResource NormalEntryStyle}"></Entry>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="I am over 13 years old." Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center" />
+                <Switch x:Name="imover13Switch" Toggled="Imover13Switch_Toggled"/>
+            </StackLayout>
+            <Button x:Name="signupButton" IsEnabled="False" Clicked="SignupButton_Clicked" Text="Sign Up" Style="{StaticResource NormalButtonStyle}"></Button>
+            <StackLayout HorizontalOptions="Center">
+                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" Text="By clicking Sign up, you agree to our" />
+                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#CFB2AA" FontAttributes="Italic" Text="Terms and Condition.">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#CFB2AA" FontAttributes="Italic" Text=" and Privacy Policy.">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <ActivityIndicator IsRunning="false" x:Name="uploadActivity"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

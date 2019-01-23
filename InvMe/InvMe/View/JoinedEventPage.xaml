@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.View.JoinedEventPage"
+             xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin"
+             Title="Joined events">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView RowHeight="100" ItemTapped="eventListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                      <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                             <Grid BackgroundColor="White">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
+                                        <Label Text="{Binding MONTH}" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                        <Label Text="{Binding DAY}" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    </StackLayout>
+                                    <Label Text="{Binding TIME}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    <Label Text="{Binding EVENTNAME}" TextColor="Gray" FontSize="Large" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Style="{StaticResource NormalLabelStyle}"/>
+                                    <Label Text="{Binding TOWN}" TextColor="Gray" FontSize="Large" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Style="{StaticResource NormalLabelStyle}"/>
+                                </Grid>
+                        </customControls:ExtendedViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
