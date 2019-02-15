@@ -1,9 +1,11 @@
 ﻿using Model;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.IO;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -156,6 +158,55 @@ namespace DAL
             this.ConnectionString = ConnectionString;
         }
 
+        public string RequestJson(string uri)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://invmewebapp20190213124106.azurewebsites.net/api/" + uri);
+            request.Method = HttpMethod.Get;//Get Put Post Delete
+            request.Headers.Add("Accept", "aaplication/json");//we would like JSON as response
+            var client = new HttpClient();
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK) { }
+
+            HttpContent content = response.Content;
+            var json = content.ReadAsStringAsync().Result;
+
+            return json;
+        }
+
+        public HttpResponseMessage PostPut(HttpMethod method, object sendingObject, string uri)
+        {
+            string json = JsonConvert.SerializeObject(sendingObject);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://invmewebapp20190213124106.azurewebsites.net/api/" + uri);
+            request.Method = method;
+            request.Content = content;
+
+            var client = new HttpClient();
+            return client.SendAsync(request).Result;
+        }
+
+        public HttpResponseMessage Delete(string url, object sendingObject = null)
+        {
+            string json = JsonConvert.SerializeObject(sendingObject);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://invmewebapp20190213124106.azurewebsites.net/api/" + url);
+            request.Method = HttpMethod.Delete;
+
+            if (sendingObject != null)
+            {
+                request.Content = content;
+            }
+
+            var client = new HttpClient();
+            return client.SendAsync(request).Result;
+        }
+
         public static byte[] ReadFully(Stream input)
         {
             try
@@ -200,22 +251,13 @@ namespace DAL
 
         public bool DeleteEvent(Events events)
         {
-            try
+            var message = Delete("Events/DeleteEvents/" + events.ID);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(
-                        DELETE_EVENTS_SQL
-                        , conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", events.ID);
-                        if (cmd.ExecuteNonQuery() == 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -223,22 +265,13 @@ namespace DAL
 
         public bool DeleteFriend(Friends friend)
         {
-            try
+            var message = Delete("Friends/DeleteFriends/" + friend.ID);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(
-                       DELETE_FRIENDS_SQL
-                        , conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", friend.ID);
-                        if (cmd.ExecuteNonQuery() == 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -246,22 +279,13 @@ namespace DAL
 
         public bool DeleteAttended(Attended attend)
         {
-            try
+            var message = Delete("Attended/DeleteAttended/" + attend.ID);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(
-                       DELETE_ATTENDED_SQL
-                        , conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", attend.ID);
-                        if (cmd.ExecuteNonQuery() == 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -269,23 +293,13 @@ namespace DAL
 
         public bool DeleteAttendedbyuseridandeventid(Attended attend)
         {
-            try
+            var message = Delete("Attended/DeleteAttendedByAttended", attend);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(
-                       DELETE_ATTENDEDuserideventid_SQL
-                        , conn))
-                    {
-                        cmd.Parameters.AddWithValue("@USER_ID", attend.USER_ID);
-                        cmd.Parameters.AddWithValue("@EVENT_ID", attend.EVENT_ID);
-                        if (cmd.ExecuteNonQuery() == 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -293,22 +307,13 @@ namespace DAL
 
         public bool DeleteHashtag(Hashtags hastag)
         {
-            try
+            var message = Delete("Hashtags/DeleteHashtags", hastag);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(
-                        DELETE_HASHTAG_SQL
-                        , conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", hastag.ID);
-                        if (cmd.ExecuteNonQuery() == 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -316,20 +321,13 @@ namespace DAL
 
         public bool DeleteUser(User user)
         {
-            try
+            var message = Delete("Users/DeleteUser/" + user.ID);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(DELETE_USER_SQL, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@id", user.ID);
-                        if (cmd.ExecuteNonQuery() >= 1) return true;
-                        else return false;
-                    }
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -343,27 +341,7 @@ namespace DAL
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_GlobalCasualImage_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                System.IO.Stream stream = reader.GetStream(reader.GetOrdinal("CasualImage"));
-
-                                if (stream.Length != 0)
-                                    return ReadFully(stream);
-                                else return null;
-                            }
-                        }
-                    }
-                }
-                return null;
+                return JsonConvert.DeserializeObject<byte[]>(RequestJson("CasualImage/GetCasualImage"));
             }
             catch (Exception)
             {
@@ -373,113 +351,9 @@ namespace DAL
 
         public List<Events> GetEvent()
         {
-            List<Events> events = new List<Events>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_EVENTS_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Events even = new Events();
-
-                                even.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                even.EVENTNAME = reader.GetString(reader.GetOrdinal("EVENTNAME"));
-                                try
-                                {
-                                    even.DESCRIPTION = reader.GetString(reader.GetOrdinal("DESCRIPTION"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.DESCRIPTION = null;
-                                }
-                                try
-                                {
-                                    even.FROM = reader.GetDateTimeOffset(reader.GetOrdinal("FROM"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.FROM = new DateTime();
-                                }
-                                try
-                                {
-                                    even.TO = reader.GetDateTimeOffset(reader.GetOrdinal("TO"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.TO = new DateTime();
-                                }
-                                try
-                                {
-                                    even.ONLINE = reader.GetInt32(reader.GetOrdinal("ONLINE"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.ONLINE = 0;
-                                }
-                                try
-                                {
-                                    even.TOWN = reader.GetString(reader.GetOrdinal("TOWN"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.TOWN = null;
-                                }
-                                try
-                                {
-                                    even.PLACE = reader.GetString(reader.GetOrdinal("PLACE"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.PLACE = null;
-                                }
-                                try
-                                {
-                                    even.MDESCRIPTION = reader.GetString(reader.GetOrdinal("MDESCRIPTION"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.MDESCRIPTION = null;
-                                }
-                                try
-                                {
-                                    even.HOWMANY = reader.GetInt32(reader.GetOrdinal("HOWMANY"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.HOWMANY = 1;
-                                }
-                                try
-                                {
-                                    even.MEETINGCORD = reader.GetString(reader.GetOrdinal("MEETINGCORD"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.MEETINGCORD = null;
-                                }
-                                try
-                                {
-                                    even.PLACECORD = reader.GetString(reader.GetOrdinal("PLACECORD"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.PLACECORD = null;
-                                }
-
-                                events.Add(even);
-                            }
-                        }
-                    }
-                }
-                return events;
+                return JsonConvert.DeserializeObject<List<Events>>(RequestJson("Events/GetEvents"));
             }
             catch (Exception)
             {
@@ -489,34 +363,9 @@ namespace DAL
 
         public List<Friends> GetFriend()
         {
-            List<Friends> friends = new List<Friends>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_FRIENDS_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Friends friend = new Friends();
-
-                                friend.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                friend.SUID = reader.GetInt32(reader.GetOrdinal("SUID"));
-                                friend.GUID = reader.GetInt32(reader.GetOrdinal("GUID"));
-
-                                friends.Add(friend);
-                            }
-                        }
-                    }
-                }
-                return friends;
+                return JsonConvert.DeserializeObject<List<Friends>>(RequestJson("Friends/GetFriends"));
             }
             catch (Exception)
             {
@@ -526,34 +375,9 @@ namespace DAL
 
         public List<Attended> GetAttended()
         {
-            List<Attended> attended = new List<Attended>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_ATTENDED_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Attended attend = new Attended();
-
-                                attend.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                attend.USER_ID = reader.GetInt32(reader.GetOrdinal("user_id"));
-                                attend.EVENT_ID = reader.GetInt32(reader.GetOrdinal("event_id"));
-
-                                attended.Add(attend);
-                            }
-                        }
-                    }
-                }
-                return attended;
+                return JsonConvert.DeserializeObject<List<Attended>>(RequestJson("Attended/GetAttended"));
             }
             catch (Exception)
             {
@@ -563,35 +387,9 @@ namespace DAL
 
         public List<Hashtags> GetHashtag()
         {
-            List<Hashtags> hashtags = new List<Hashtags>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_HASHTAGS_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Hashtags hashtag = new Hashtags();
-
-                                hashtag.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                hashtag.UID = reader.GetInt32(reader.GetOrdinal("UID"));
-                                hashtag.HASHTAG = reader.GetString(reader.GetOrdinal("HASHTAG"));
-                                hashtag.TOWN = reader.GetString(reader.GetOrdinal("TOWN"));
-
-                                hashtags.Add(hashtag);
-                            }
-                        }
-                    }
-                }
-                return hashtags;
+                return JsonConvert.DeserializeObject<List<Hashtags>>(RequestJson("Hashtags/GetHashtags"));
             }
             catch (Exception)
             {
@@ -601,37 +399,9 @@ namespace DAL
 
         public List<User> GetUser()
         {
-            List<User> users = new List<User>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_USER_SQL, conn))
-                {
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                User user = new User();
-
-                                user.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                user.EMAIL = reader.GetString(reader.GetOrdinal("EMAIL"));
-                                user.FIRSTNAME = reader.GetString(reader.GetOrdinal("FIRSTNAME"));
-                                user.LASTNAME = reader.GetString(reader.GetOrdinal("LASTNAME"));
-                                user.BORNDATE = reader.GetDateTime(reader.GetOrdinal("BORNDATE"));
-                                user.PROFILEPICTURE = ReadFully(reader.GetStream(reader.GetOrdinal("PROFILEPICTURE")));
-                                user.PASSWORD = reader.GetString(reader.GetOrdinal("PASSWORD"));
-
-                                users.Add(user);
-                            }
-                        }
-                    }
-                }
-                return users;
+                return JsonConvert.DeserializeObject<List<User>>(RequestJson("Users/GetUsers"));
             }
             catch (Exception)
             {
@@ -645,111 +415,9 @@ namespace DAL
 
         public Events GetEventByID(int ID)
         {
-            Events even = new Events();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(
-                    GETBYID_EVENTS_SQL
-                    , conn))
-                {
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                even.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                even.EVENTNAME = reader.GetString(reader.GetOrdinal("EVENTNAME"));
-                                try
-                                {
-                                    even.DESCRIPTION = reader.GetString(reader.GetOrdinal("DESCRIPTION"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.DESCRIPTION = null;
-                                }
-                                try
-                                {
-                                    even.FROM = reader.GetDateTimeOffset(reader.GetOrdinal("FROM"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.FROM = new DateTime();
-                                }
-                                try
-                                {
-                                    even.TO = reader.GetDateTimeOffset(reader.GetOrdinal("TO"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.TO = new DateTime();
-                                }
-                                try
-                                {
-                                    even.ONLINE = reader.GetInt32(reader.GetOrdinal("ONLINE"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.ONLINE = 0;
-                                }
-                                try
-                                {
-                                    even.TOWN = reader.GetString(reader.GetOrdinal("TOWN"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.TOWN = null;
-                                }
-                                try
-                                {
-                                    even.PLACE = reader.GetString(reader.GetOrdinal("PLACE"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.PLACE = null;
-                                }
-                                try
-                                {
-                                    even.MDESCRIPTION = reader.GetString(reader.GetOrdinal("MDESCRIPTION"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.MDESCRIPTION = null;
-                                }
-                                try
-                                {
-                                    even.HOWMANY = reader.GetInt32(reader.GetOrdinal("HOWMANY"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.HOWMANY = 1;
-                                }
-                                try
-                                {
-                                    even.MEETINGCORD = reader.GetString(reader.GetOrdinal("MEETINGCORD"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.MEETINGCORD = null;
-                                }
-                                try
-                                {
-                                    even.PLACECORD = reader.GetString(reader.GetOrdinal("PLACECORD"));
-                                }
-                                catch (Exception)
-                                {
-                                    even.PLACECORD = null;
-                                }
-                            }
-                        }
-                    }
-                }
-                return even;
+                return JsonConvert.DeserializeObject<Events>(RequestJson("Events/GetEventsByID/" + ID));
             }
             catch (Exception)
             {
@@ -759,33 +427,9 @@ namespace DAL
 
         public Friends GetFriendByID(int ID)
         {
-            Friends friend = new Friends();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(
-                    GETBYID_FRIENDS_SQL
-                    , conn))
-                {
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@id", ID);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                friend.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                friend.SUID = reader.GetInt32(reader.GetOrdinal("SUID"));
-                                friend.GUID = reader.GetInt32(reader.GetOrdinal("GUID"));
-                            }
-                        }
-                    }
-                }
-                return friend;
+                return JsonConvert.DeserializeObject<Friends>(RequestJson("Friends/GetFriendsByID/" + ID));
             }
             catch (Exception)
             {
@@ -795,37 +439,9 @@ namespace DAL
 
         public List<Hashtags> GetHashtagByUSERID(int ID)
         {
-            List<Hashtags> hashtags = new List<Hashtags>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(
-                    GETBYID_HASHTAGS_SQL
-                    , conn))
-                {
-                    conn.Open();
-                    cmd.Parameters.AddWithValue("@id", ID);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Hashtags hashtag = new Hashtags();
-
-                                hashtag.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                hashtag.UID = reader.GetInt32(reader.GetOrdinal("UID"));
-                                hashtag.HASHTAG = reader.GetString(reader.GetOrdinal("HASHTAG"));
-                                hashtag.TOWN = reader.GetString(reader.GetOrdinal("TOWN"));
-
-                                hashtags.Add(hashtag);
-                            }
-                        }
-                    }
-                }
-                return hashtags;
+                return JsonConvert.DeserializeObject<List<Hashtags>>(RequestJson("Hashtags/GetHashtagsByUserID/" + ID));
             }
             catch (Exception)
             {
@@ -835,38 +451,9 @@ namespace DAL
 
         public User GetUserByID(int ID)
         {
-            User user = new User();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(
-                    GETBYID_USER_SQL
-                    , conn))
-                {
-                    conn.Open();
-
-                    cmd.Parameters.AddWithValue("@id", ID);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                user.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                user.EMAIL = reader.GetString(reader.GetOrdinal("EMAIL"));
-                                user.FIRSTNAME = reader.GetString(reader.GetOrdinal("FIRSTNAME"));
-                                user.LASTNAME = reader.GetString(reader.GetOrdinal("LASTNAME"));
-                                user.BORNDATE = reader.GetDateTime(reader.GetOrdinal("BORNDATE"));
-                                user.PROFILEPICTURE = ReadFully(reader.GetStream(reader.GetOrdinal("PROFILEPICTURE")));
-                                user.PASSWORD = reader.GetString(reader.GetOrdinal("PASSWORD"));
-                            }
-                        }
-                    }
-                }
-                return user;
+                return JsonConvert.DeserializeObject<User>(RequestJson("Users/GetUserByID/" + ID));
             }
             catch (Exception)
             {
@@ -876,37 +463,9 @@ namespace DAL
 
         public User GetUserByEMAIL(string EMAIL)
         {
-            User user = new User();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(
-                    GETBYEMAIL_USER_SQL
-                    , conn))
-                {
-                    conn.Open();
-
-                    cmd.Parameters.AddWithValue("@EMAIL", EMAIL);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                user.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                user.EMAIL = reader.GetString(reader.GetOrdinal("EMAIL"));
-                                user.FIRSTNAME = reader.GetString(reader.GetOrdinal("FIRSTNAME"));
-                                user.LASTNAME = reader.GetString(reader.GetOrdinal("LASTNAME"));
-                                user.BORNDATE = reader.GetDateTime(reader.GetOrdinal("BORNDATE"));
-                                user.PROFILEPICTURE = ReadFully(reader.GetStream(reader.GetOrdinal("PROFILEPICTURE")));
-                                user.PASSWORD = reader.GetString(reader.GetOrdinal("PASSWORD"));
-                            }
-                        }
-                    }
-                }
-                return user;
+                return JsonConvert.DeserializeObject<User>(RequestJson("Users/GetUserByEmail/" + EMAIL));
             }
             catch (Exception)
             {
@@ -916,33 +475,9 @@ namespace DAL
 
         public Attended GetAttendedByUserAnEventID(int USERID, int EVENTID)
         {
-            Attended attended = new Attended();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_ATTENDEDBYUSERIDANDEVENTID_SQL, conn))
-                {
-                    cmd.Parameters.AddWithValue("@USERID", USERID);
-                    cmd.Parameters.AddWithValue("@EVENTID", EVENTID);
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                attended.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                attended.USER_ID = reader.GetInt32(reader.GetOrdinal("user_id"));
-                                attended.EVENT_ID = reader.GetInt32(reader.GetOrdinal("event_id"));
-
-                                break;
-                            }
-                        }
-                    }
-                }
-                return attended;
+                return JsonConvert.DeserializeObject<Attended>(RequestJson("Attended/GetAttendedByUserAnEventID?userid=" + USERID + "&eventid=" + EVENTID));
             }
             catch (Exception)
             {
@@ -952,33 +487,9 @@ namespace DAL
 
         public List<Attended> GetAttendedByID(int ID)
         {
-            List<Attended> attend = new List<Attended>();
-
             try
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_ATTENDEDBYID_SQL, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Attended attended = new Attended();
-                                attended.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                attended.USER_ID = reader.GetInt32(reader.GetOrdinal("user_id"));
-                                attended.EVENT_ID = reader.GetInt32(reader.GetOrdinal("event_id"));
-
-                                attend.Add(attended);
-                            }
-                        }
-                    }
-                }
-                return attend;
+                return JsonConvert.DeserializeObject<List<Attended>>(RequestJson("Attended/GetAttendedByID/" + ID));
             }
             catch (Exception)
             {
@@ -988,36 +499,9 @@ namespace DAL
 
         public List<Attended> GetAttendedByEventID(int ID)
         {
-            List<Attended> attended = new List<Attended>();
-
             try
             {
-
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                using (SqlCommand cmd = new SqlCommand(GET_ATTENDEDBYEVENTID_SQL, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", ID);
-                    conn.Open();
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-
-                        if (reader != null)
-                        {
-                            while (reader.Read())
-                            {
-                                Attended attend = new Attended();
-
-                                attend.ID = reader.GetInt32(reader.GetOrdinal("id"));
-                                attend.USER_ID = reader.GetInt32(reader.GetOrdinal("user_id"));
-                                attend.EVENT_ID = reader.GetInt32(reader.GetOrdinal("event_id"));
-
-                                attended.Add(attend);
-                            }
-                        }
-                    }
-                }
-                return attended;
+                return JsonConvert.DeserializeObject<List<Attended>>(RequestJson("Attended/GetAttendedByEventID/" + ID));
             }
             catch (Exception)
             {
@@ -1031,57 +515,13 @@ namespace DAL
 
         public bool InsertUser(User user)
         {
-            try
+            var message = PostPut(HttpMethod.Post, user, "Users/InsertUser");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_USER_SQL, conn);
-
-                    cmd.Parameters.Add(
-                        new SqlParameter("@EMAIL", user.EMAIL)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@FIRSTNAME", user.FIRSTNAME)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@LASTNAME", user.LASTNAME)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@BORNDATE", (object)user.BORNDATE ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.DateTime
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@PROFILEPICTURE", (object)user.PROFILEPICTURE ?? DBNull.Value)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Image
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@PASSWORD", EncryptPassword(user.PASSWORD))
-                        {
-                            SqlDbType = System.Data.SqlDbType.VarChar
-                        }
-                     );
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -1089,151 +529,34 @@ namespace DAL
 
         public int InsertEventAsync(Events events)
         {
-            try
-            {
-                SqlConnection conn = new SqlConnection(ConnectionString);
+            var message = PostPut(HttpMethod.Post, events, "Events/InsertEvent");
 
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand(INSERT_EVENTS_SQL, conn);
-
-                cmd.Parameters.Add(
-                    new SqlParameter("@EVENTNAME", events.EVENTNAME)
-                    {
-                        SqlDbType = System.Data.SqlDbType.NVarChar
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@HOWMANY", events.HOWMANY)
-                    {
-                        SqlDbType = System.Data.SqlDbType.Int
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@ONLINE", events.ONLINE)
-                    {
-                        SqlDbType = System.Data.SqlDbType.Int
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@FROM", (object)events.FROM ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.DateTimeOffset
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@TO", (object)events.TO ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.DateTimeOffset
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@TOWN", (object)events.TOWN ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.NVarChar
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@PLACE", (object)events.PLACE ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.NVarChar
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@MEETINGCORD", (object)events.MEETINGCORD ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.NVarChar
-                    }
-                 );
-                cmd.Parameters.Add(
-                    new SqlParameter("@PLACECORD", (object)events.PLACECORD ?? DBNull.Value)
-                    {
-                        SqlDbType = System.Data.SqlDbType.NVarChar
-                    }
-                 );
-
-                var idpar = new SqlParameter("@id", DBNull.Value)
-                {
-                    SqlDbType = System.Data.SqlDbType.Int,
-                    Direction = System.Data.ParameterDirection.Output
-                };
-                cmd.Parameters.Add(idpar);
-                cmd.CommandTimeout = 600;
-                cmd.ExecuteNonQuery();
-
-                events.ID = (int)idpar.Value;
-
-                return events.ID;
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
+            return JsonConvert.DeserializeObject<int>(message.Content.ReadAsStringAsync().Result);
         }
 
-        public string InsertFriend(Friends friends)
+        public bool InsertFriend(Friends friends)
         {
-            try
+            var message = PostPut(HttpMethod.Post, friends, "Friends/InsertFriends");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_FRIENDS_SQL, conn);
-
-                    cmd.Parameters.Add(
-                        new SqlParameter("@SUID", friends.SUID)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@GUID", friends.GUID)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-
-                    cmd.ExecuteNonQuery();
-
-                    return "";
-                }
+                return true;
             }
-            catch (Exception e)
+            else
             {
-                return e.Message;
+                return false;
             }
         }
 
         public bool InsertAttended(Attended attended)
         {
-            try
+            var message = PostPut(HttpMethod.Post, attended, "Attended/InsertAttended");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_ATTENDED_SQL, conn);
-
-                    cmd.Parameters.Add(
-                        new SqlParameter("@user_id", attended.USER_ID)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Int
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@event_id", attended.EVENT_ID)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Int
-                        }
-                     );
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -1241,39 +564,13 @@ namespace DAL
 
         public bool InsertHashtag(Hashtags hashtags)
         {
-            try
+            var message = PostPut(HttpMethod.Post, hashtags, "Hashtags/InsertHashtags");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn = new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(INSERT_HASHTAGS_SQL, conn);
-
-                    cmd.Parameters.Add(
-                        new SqlParameter("@HASHTAG", hashtags.HASHTAG)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@UID", hashtags.UID)
-                        {
-                            SqlDbType = System.Data.SqlDbType.Int
-                        }
-                     );
-                    cmd.Parameters.Add(
-                        new SqlParameter("@TOWN", hashtags.TOWN)
-                        {
-                            SqlDbType = System.Data.SqlDbType.NVarChar
-                        }
-                     );
-
-                    cmd.ExecuteNonQuery();
-
-                    return true;
-                }
+                return true;
             }
-            catch (Exception)
+            else
             {
                 return false;
             }
@@ -1285,36 +582,13 @@ namespace DAL
 
         public bool UpdateEvent(int ID, Events events)
         {
-            try
+            var message = PostPut(HttpMethod.Put, events, "Events/UpdateEvents");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn =
-                    new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            UPDATE_EVENTS_SQL, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", ID);
-                        cmd.Parameters.AddWithValue("@EVENTNAME", events.EVENTNAME);
-                        cmd.Parameters.AddWithValue("@DESCRIPTION", events.DESCRIPTION);
-                        cmd.Parameters.AddWithValue("@FROM", events.FROM);
-                        cmd.Parameters.AddWithValue("@TO", events.TO);
-                        cmd.Parameters.AddWithValue("@ONLINE", events.ONLINE);
-                        cmd.Parameters.AddWithValue("@TOWN", events.TOWN);
-                        cmd.Parameters.AddWithValue("@PLACE", events.PLACE);
-                        cmd.Parameters.AddWithValue("@MDESCRIPTION", events.MDESCRIPTION);
-                        cmd.Parameters.AddWithValue("@HOWMANY", events.HOWMANY);
-                        cmd.Parameters.AddWithValue("@MEETINGCORD", events.HOWMANY);
-                        cmd.Parameters.AddWithValue("@PLACECORD", events.HOWMANY);
-
-                        int rows = cmd.ExecuteNonQuery();
-
-                        if (rows == 1) return true; else return false;
-                    }
-                }
+                return true;
             }
-            catch (SqlException)
+            else
             {
                 return false;
             }
@@ -1322,27 +596,13 @@ namespace DAL
 
         public bool UpdateFriend(int ID, Friends friend)
         {
-            try
+            var message = PostPut(HttpMethod.Put, friend, "Friends/UpdateFriends");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn =
-                    new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            UPDATE_FRIENDS_SQL, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", ID);
-                        cmd.Parameters.AddWithValue("@SUID", friend.SUID);
-                        cmd.Parameters.AddWithValue("@GUID", friend.GUID);
-
-                        int rows = cmd.ExecuteNonQuery();
-
-                        if (rows == 1) return true; else return false;
-                    }
-                }
+                return true;
             }
-            catch (SqlException)
+            else
             {
                 return false;
             }
@@ -1350,28 +610,13 @@ namespace DAL
 
         public bool UpdateHashtag(int ID, Hashtags hastag)
         {
-            try
+            var message = PostPut(HttpMethod.Put, hastag, "Hashtags/UpdateHashtags");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                using (SqlConnection conn =
-                    new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            UPDATE_HASHTAGS_SQL, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", ID);
-                        cmd.Parameters.AddWithValue("@UID", hastag.UID);
-                        cmd.Parameters.AddWithValue("@HASHTAG", hastag.HASHTAG);
-                        cmd.Parameters.AddWithValue("@TOWN", hastag.TOWN);
-
-                        int rows = cmd.ExecuteNonQuery();
-
-                        if (rows == 1) return true; else return false;
-                    }
-                }
+                return true;
             }
-            catch (SqlException)
+            else
             {
                 return false;
             }
@@ -1379,32 +624,13 @@ namespace DAL
 
         public bool UpdateUser(int ID, User user)
         {
-            try
-            {
-                using (SqlConnection conn =
-                    new SqlConnection(ConnectionString))
-                {
-                    conn.Open();
-                    using (SqlCommand cmd =
-                        new SqlCommand(
-                            UPDATE_USER_SQL, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@ID", ID);
-                        cmd.Parameters.AddWithValue("@EMAIL", user.EMAIL);
-                        cmd.Parameters.AddWithValue("@FIRSTNAME", user.FIRSTNAME);
-                        cmd.Parameters.AddWithValue("@LASTNAME", user.LASTNAME);
-                        cmd.Parameters.AddWithValue("@BORNDATE", user.BORNDATE);
-                        cmd.Parameters.AddWithValue("@PROFILEPICTURE", user.PROFILEPICTURE);
-                        cmd.Parameters.AddWithValue("@PASSWORD", user.PASSWORD);
+            var message = PostPut(HttpMethod.Put, user, "Users/UpdateUser");
 
-                        int rows = cmd.ExecuteNonQuery();
-                        
-                        if (rows == 1) return true;
-                        return false;
-                    }
-                }
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
             }
-            catch (SqlException)
+            else
             {
                 return false;
             }
