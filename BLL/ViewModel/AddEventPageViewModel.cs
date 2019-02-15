@@ -61,6 +61,7 @@ namespace BLL.ViewModel
                 }
                 
                 events.MDESCRIPTION = "";
+                events.DESCRIPTION = "";
 
                 int success = GlobalVariables.DatabaseConnection.InsertEventAsync(events);
 

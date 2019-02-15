@@ -15,7 +15,7 @@ namespace BLL.ViewModel
 
             attended = GlobalVariables.DatabaseConnection.GetAttendedByID(GlobalVariables.ActualUser.ID);
 
-            if (attended.Count == 0)
+            if (attended is null || attended.Count == 0)
             {
                 return new List<BindableEvent>();
             }

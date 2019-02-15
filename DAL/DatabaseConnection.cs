@@ -307,7 +307,7 @@ namespace DAL
 
         public bool DeleteHashtag(Hashtags hastag)
         {
-            var message = Delete("Hashtags/DeleteHashtags", hastag);
+            var message = Delete("Hashtags/DeleteHashtags/" + hastag.ID);
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -445,7 +445,7 @@ namespace DAL
             }
             catch (Exception)
             {
-                return null;
+                return new List<Hashtags>();
             }
         }
 
@@ -493,7 +493,7 @@ namespace DAL
             }
             catch (Exception)
             {
-                return null;
+                return new List<Attended>();
             }
         }
 
@@ -505,7 +505,7 @@ namespace DAL
             }
             catch (Exception)
             {
-                return null;
+                return new List<Attended>();
             }
         }
 
