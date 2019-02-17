@@ -13,11 +13,11 @@
         /// <summary>
         /// USER_ID
         /// </summary>
-        public int USER_ID { get; set; }
+        public int USERID { get; set; }
 
         /// <summary>
         /// EVENT_ID
         /// </summary>
-        public int EVENT_ID { get; set; }
+        public int EVENTID { get; set; }
     }
 }

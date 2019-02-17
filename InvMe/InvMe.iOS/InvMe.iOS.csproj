@@ -338,4 +338,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\eventdatecalendar.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\more.png" />
+  </ItemGroup>
 </Project>

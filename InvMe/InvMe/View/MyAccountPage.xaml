@@ -6,6 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <!--<Button x:Name="impressButton" Clicked="ImpressButton_Clicked" Text="Impress"></Button>-->
+            <Button x:Name="blockButton" Clicked="BlockButton_Clicked" Text="Blocked people" Style="{StaticResource NormalButtonStyle}"></Button>
             <Button x:Name="deleteButton" Clicked="DeleteButton_Clicked" Text="Delete account" Style="{StaticResource NormalButtonStyle}"></Button>
             <Button x:Name="logoutButton" Clicked="LogoutButton_Clicked" Text="Logout" Style="{StaticResource NormalButtonStyle}"></Button>
             <ActivityIndicator x:Name="deleteActivity" IsRunning="False"></ActivityIndicator>

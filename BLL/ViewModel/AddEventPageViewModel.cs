@@ -72,8 +72,8 @@ namespace BLL.ViewModel
                 else
                 {
                     Attended attend = new Attended();
-                    attend.USER_ID = GlobalVariables.ActualUser.ID;
-                    attend.EVENT_ID = success;
+                    attend.USERID = GlobalVariables.ActualUser.ID;
+                    attend.EVENTID = success;
 
                     bool successq = GlobalVariables.DatabaseConnection.InsertAttended(attend);
 

@@ -41,5 +41,10 @@ namespace Model
         /// PASSWORD
         /// </summary>
         public string PASSWORD { get; set; }
+
+        /// <summary>
+        /// REPORTED
+        /// </summary>
+        public int REPORTED { get; set; }
     }
 }

@@ -3,10 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.UserDescriptionPage"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Name="updateToolbarItem" Activated="UpdateToolbarItem_Activated" Order="Primary" Text="Update"/>
-        <ToolbarItem Name="settingsToolbarItem" Activated="SettingsToolbarItem_Activated" Order="Primary" Text="Settings"/>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="0,25,0,0">
@@ -22,7 +18,8 @@
                         </OnPlatform>
                     </controls:CircleImage.HeightRequest>
                 </controls:CircleImage>
-                <StackLayout Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,25,0,0">
+                <Label HorizontalOptions="Center" x:Name="blockedLabel" IsVisible="False" Style="{StaticResource NormalLabelStyle}" />
+                <StackLayout IsVisible="False" x:Name="detailStackLayout" Orientation="Vertical" VerticalOptions="Center" HorizontalOptions="Center" Margin="0,25,0,0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
@@ -41,6 +38,8 @@
                         <!--<Label x:Name="emailLabel" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>-->
                     </Grid>
                 </StackLayout>
+                <Button Text="Report" IsVisible="False" x:Name="reportButton" Clicked="ReportButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+                <Button Text="Block" IsVisible="False" x:Name="blockButton" Clicked="BlockButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

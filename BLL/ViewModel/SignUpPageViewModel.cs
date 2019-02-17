@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using BLL.Helper;
+using Model;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -23,8 +24,13 @@ namespace BLL.ViewModel
 
             var isItAUser = GlobalVariables.DatabaseConnection.GetUserByEMAIL(user.EMAIL);
 
-            if (isItAUser.EMAIL is null)
+            if (isItAUser is null)
             {
+                GlobalVariables.GlobalCasualImage = GlobalVariables.DatabaseConnection.GetGlobalCasualImage();
+
+                user.PASSWORD = GlobalFunctionsContainer.EncryptPassword(user.PASSWORD);
+                user.PROFILEPICTURE = GlobalVariables.GlobalCasualImage;
+
                 var success = GlobalVariables.DatabaseConnection.InsertUser(user);
 
                 if (success)

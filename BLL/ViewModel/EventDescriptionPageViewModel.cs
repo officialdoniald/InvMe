@@ -24,7 +24,7 @@ namespace BLL.ViewModel
 
         public bool DeleteAttended(Attended attended)
         {
-            return GlobalVariables.DatabaseConnection.DeleteAttendedbyuseridandeventid(attended);
+            return GlobalVariables.DatabaseConnection.DeleteAttendedByAttended(attended);
         }
 
         public bool InsertAttended(Attended attended)
@@ -35,6 +35,22 @@ namespace BLL.ViewModel
         public User GetUserByID(int id)
         {
             return GlobalVariables.DatabaseConnection.GetUserByID(id);
+        }
+
+        public bool ReportUser(Events events)
+        {
+            events.REPORTED = 1;
+
+            bool reported = GlobalVariables.DatabaseConnection.UpdateEvent(events);
+
+            if (reported)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

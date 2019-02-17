@@ -8,11 +8,11 @@ using Xamarin.Forms.Xaml;
 
 namespace InvMe.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class JoinedEventPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class JoinedEventPage : ContentPage
+    {
         private List<BindableEvent> bindableEventList = new List<BindableEvent>();
-        
+
         public JoinedEventPage()
         {
             InitializeComponent();
@@ -29,19 +29,21 @@ namespace InvMe.View
 
         private void GetTheEvents()
         {
-            Task.Run(() => {
-            Device.BeginInvokeOnMainThread(() => {
-                InitializeComponent();
-                eventListView.ItemsSource = null;
+            Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    InitializeComponent();
+                    eventListView.ItemsSource = null;
 
-            bindableEventList = new List<BindableEvent>();
+                    bindableEventList = new List<BindableEvent>();
 
-            bindableEventList = new JoinedEventPageViewModel().GetAttendedEvents();
+                    bindableEventList = new JoinedEventPageViewModel().GetAttendedEvents();
 
-            eventListView.ItemsSource = bindableEventList;
+                    eventListView.ItemsSource = bindableEventList;
+                });
             });
-            });
-    }
+        }
 
         private async void eventListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {

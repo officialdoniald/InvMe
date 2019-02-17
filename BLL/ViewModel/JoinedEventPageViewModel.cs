@@ -22,7 +22,12 @@ namespace BLL.ViewModel
 
             foreach (var item in attended)
             {
-                eventsFromDB.Add(GlobalVariables.DatabaseConnection.GetEventByID(item.EVENT_ID));
+                Events events = GlobalVariables.DatabaseConnection.GetEventByID(item.EVENTID);
+
+                if (events != null)
+                {
+                    eventsFromDB.Add(events);
+                }
             }
 
             eventsFromDB = eventsFromDB.OrderBy(d => d.FROM).ToList();

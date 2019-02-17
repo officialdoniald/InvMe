@@ -61,5 +61,9 @@
         string BadOldPassword();
 
         string YouHaveToPickThePlaceAndMeetingOnTheMap();
+
+        string SuccessReg();
+
+        string BlockedUser();
     }
 }

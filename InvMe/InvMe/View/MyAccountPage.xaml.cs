@@ -90,5 +90,10 @@ namespace InvMe.View
                 deleteActivity.IsRunning = !state;
             });
         }
+
+        private void BlockButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new BlockedPeoplePage());
+        }
     }
 }

@@ -66,5 +66,10 @@ namespace Model
         /// PLACECORD
         /// </summary>
         public string PLACECORD { get; set; }
+
+        /// <summary>
+        /// REPORTED
+        /// </summary>
+        public int REPORTED { get; set; }
     }
 }

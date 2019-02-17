@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InvMe.View.BlockedPeoplePage"
+             Title="Blocked people"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin">
+    <ContentPage.Content>
+        <ListView RowHeight="80" HorizontalOptions="Center" VerticalOptions="StartAndExpand" Refreshing="userListView_Refreshing" IsPullToRefreshEnabled="True" ItemTapped="userListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding listViewWithPictureAndSomeText}" x:Name="userListView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                        <Grid BackgroundColor="White">
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="60"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <controls:CircleImage Grid.Row="0" Grid.Column="0" Source="{Binding PROFILEPICTURE}" Aspect="AspectFill" HorizontalOptions="Center" VerticalOptions="Center">
+                                <controls:CircleImage.WidthRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">45</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.WidthRequest>
+                                <controls:CircleImage.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android, iOS">45</On>
+                                    </OnPlatform>
+                                </controls:CircleImage.HeightRequest>
+                            </controls:CircleImage>
+                            <Label Text="{Binding FIRSTNAME}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                        </Grid>
+                        <customControls:ExtendedViewCell.ContextActions>
+                            <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="Delete" IsDestructive="True"/>
+                        </customControls:ExtendedViewCell.ContextActions>
+                    </customControls:ExtendedViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

@@ -249,6 +249,20 @@ namespace DAL
 
         #region DeleteFunctions
 
+        public bool DeleteBlockedPeople(BlockedPeople blockedPeople)
+        {
+            var message = Delete("Blockedpeople/DeleteBlockedUser", blockedPeople);
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool DeleteEvent(Events events)
         {
             var message = Delete("Events/DeleteEvents/" + events.ID);
@@ -276,24 +290,12 @@ namespace DAL
                 return false;
             }
         }
-
-        public bool DeleteAttended(Attended attend)
+        
+        public bool DeleteAttendedByAttended(Attended attend)
         {
-            var message = Delete("Attended/DeleteAttended/" + attend.ID);
+            var attended = GetAttendedByUserAnEventID(attend.USERID,attend.EVENTID);
 
-            if (message.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public bool DeleteAttendedbyuseridandeventid(Attended attend)
-        {
-            var message = Delete("Attended/DeleteAttendedByAttended", attend);
+            var message = Delete("Attended/DeleteAttendedByAttended", attended);
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -413,6 +415,18 @@ namespace DAL
 
         #region GetElementByID
 
+        public List<BlockedPeople> GetBlockedPeopleByID(int userid)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<List<BlockedPeople>>(RequestJson("Blockedpeople/BlockedPeopleList/" + userid));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public Events GetEventByID(int ID)
         {
             try
@@ -513,6 +527,20 @@ namespace DAL
 
         #region InsertFunctions
 
+        public bool InsertBlockedPeople(BlockedPeople blockedPeople)
+        {
+            var message = PostPut(HttpMethod.Post, blockedPeople, "Blockedpeople/InsertBlockeduser");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public bool InsertUser(User user)
         {
             var message = PostPut(HttpMethod.Post, user, "Users/InsertUser");
@@ -580,7 +608,23 @@ namespace DAL
 
         #region UpdateFunctions
 
-        public bool UpdateEvent(int ID, Events events)
+        public bool UpdateUserReported(User ID)
+        {
+            ID.REPORTED = 1;
+
+            var message = PostPut(HttpMethod.Put, ID, "Users/ReportUser");
+
+            if (message.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateEvent(Events events)
         {
             var message = PostPut(HttpMethod.Put, events, "Events/UpdateEvents");
 

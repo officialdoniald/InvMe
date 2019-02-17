@@ -7,6 +7,7 @@ using Model;
 using Plugin.ExternalMaps;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -203,8 +204,8 @@ namespace InvMe.View
             bool success = false;
 
             attend = new Attended();
-            attend.USER_ID = GlobalVariables.ActualUser.ID;
-            attend.EVENT_ID = ThisEvent.ID;
+            attend.USERID = GlobalVariables.ActualUser.ID;
+            attend.EVENTID = ThisEvent.ID;
 
             if (isAttended)
             {
@@ -263,6 +264,36 @@ namespace InvMe.View
         void Handle_Clicked(object sender, System.EventArgs e)
         {
             Navigation.PushAsync(new AttendedUsersListPage(ThisEvent));
+        }
+
+        private async void ReportButton_Clicked(object sender, EventArgs e)
+        {
+            var success = new EventDescriptionPageViewModel().ReportUser(ThisEvent);
+
+            if (success)
+            {
+                try
+                {
+                    foreach (var item in GlobalVariables.DatabaseConnection.GetAttendedByEventID(ThisEvent.ID))
+                    {
+                        var user = GlobalVariables.DatabaseConnection.GetUserByID(item.USERID);
+                        
+                        string url = string.Format("http://invme.hu/php_files/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.EMAIL, user.FIRSTNAME, 1);
+                        Uri uri1 = new Uri(url);
+                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                        request.Method = "GET";
+                        WebResponse res1 = await request.GetResponseAsync();
+                    }
+                }
+                catch (Exception) { }
+
+                await DisplayAlert("Success", "Thanks..", "OK");
+                await Navigation.PopToRootAsync();
+            }
+            else
+            {
+                await DisplayAlert("Failed", "Something went wrong", "OK");
+            }
         }
     }
 }

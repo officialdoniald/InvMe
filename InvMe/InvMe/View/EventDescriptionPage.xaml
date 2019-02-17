@@ -7,7 +7,8 @@
         <StackLayout Margin="0,0,0,25">
                 <Label x:Name="eventNameLabel" FontSize="25" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
                 <Label x:Name="eventTownLabel" FontSize="25" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                
+                <Button x:Name="reportButton" Text="Report event" Clicked="ReportButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>

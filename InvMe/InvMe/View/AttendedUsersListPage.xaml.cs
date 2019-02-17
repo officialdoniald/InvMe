@@ -28,19 +28,19 @@ namespace InvMe.View
             Task.Run(() => {
                 attendedToThisEvent = new AttendedUsersListPageViewModel().GetAttendedByEventID(ThisEvent.ID);
 
-                List<AttendedUser> attendedUserCollection = new List<AttendedUser>();
+                List<UserWithProfilePictureAndName> attendedUserCollection = new List<UserWithProfilePictureAndName>();
 
-                AttendedUser attendedUser = new AttendedUser();
+                UserWithProfilePictureAndName attendedUser = new UserWithProfilePictureAndName();
 
                 foreach (var item in attendedToThisEvent)
                 {
-                    attendedUser = new AttendedUser();
+                    attendedUser = new UserWithProfilePictureAndName();
 
-                    attendedUser.ID = item.USER_ID;
+                    attendedUser.ID = item.USERID;
 
                     User getUser = new User();
 
-                    getUser = new AttendedUsersListPageViewModel().GetUserByID(item.USER_ID);
+                    getUser = new AttendedUsersListPageViewModel().GetUserByID(item.USERID);
 
                     attendedUser.PROFILEPICTURE = ImageSource.FromStream(() => new System.IO.MemoryStream(getUser.PROFILEPICTURE));
 
@@ -66,7 +66,7 @@ namespace InvMe.View
 
         private void attendedListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            var selectedAttendedUser = ((AttendedUser)attendedListView.SelectedItem);
+            var selectedAttendedUser = ((UserWithProfilePictureAndName)attendedListView.SelectedItem);
 
             User selectedUser = new User();
 

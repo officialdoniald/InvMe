@@ -151,5 +151,15 @@
         {
             return "You have to pick on the map the place and meeting points!";
         }
+
+        public string SuccessReg()
+        {
+            return "Successful registration!";
+        }
+
+        public string BlockedUser()
+        {
+            return "This user is blocked!";
+        }
     }
 }
