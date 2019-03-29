@@ -8,6 +8,21 @@ namespace BLL.Xamarin.Helper
     public class LocalFuntionsContainer
     {
         /// <summary>
+        /// Initialize the userloc.txt file.
+        /// </summary>
+        public static void InitFirstUserLocationRequestFile()
+        {
+            try
+            {
+                GlobalVariables.AutomaticUserLocation = DependencyService.Get<IFileStoreAndLoad>().LoadText(LocalVariablesContainer.userlocationfile) == "0" ? false : true;
+            }
+            catch (Exception)
+            {
+                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, 0.ToString());
+            }
+        }
+
+        /// <summary>
         /// Initializes the users email.
         /// </summary>
         public static void InitializeUsersEmail()

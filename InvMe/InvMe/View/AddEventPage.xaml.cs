@@ -3,6 +3,8 @@ using BLL.ViewModel;
 using BLL.Xamarin.MapClasses;
 using Model;
 using Plugin.Geolocator;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -16,12 +18,10 @@ namespace InvMe.View
     public partial class AddEventPage : ContentPage
     {
         #region Properties
-        
+
         private bool noMatterHowLong = false;
         private bool onlineEvent = false;
         private bool noMatterHowManyPerson = false;
-
-        Plugin.Geolocator.Abstractions.Position position = new Plugin.Geolocator.Abstractions.Position();
 
         private Plugin.Geolocator.Abstractions.IGeolocator locator;
 
@@ -38,10 +38,10 @@ namespace InvMe.View
         {
             base.OnAppearing();
 
-            Initialize();
+            InitializeAsync();
         }
 
-        private void Initialize()
+        private async Task InitializeAsync()
         {
             GlobalVariables.EventCord = "";
             GlobalVariables.MeetingCord = "";
@@ -73,12 +73,13 @@ namespace InvMe.View
 
             if (Device.OS == TargetPlatform.iOS)
             {
+                var userpos = await PermissonCheck();
+
                 map = new CustomMap()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
                     MapType = MapType.Street,
-                    IsShowingUser = true,
                     kind = "event"
                 };
 
@@ -87,9 +88,14 @@ namespace InvMe.View
                     WidthRequest = 320,
                     HeightRequest = 200,
                     MapType = MapType.Street,
-                    IsShowingUser = true,
                     kind = "meeting"
                 };
+
+                if (userpos.Longitude != 0 && userpos.Latitude != 0)
+                {
+                    map.IsShowingUser = true;
+                    map2.IsShowingUser = true;
+                }
 
                 map2.CustomPins = new List<CustomPin> { };
 
@@ -104,9 +110,7 @@ namespace InvMe.View
             }
             else
             {
-                Task.Run(async () => {
-                    position = await locator.GetPositionAsync();
-                }).ContinueWith(delegate
+                Task.Run(async () =>
                 {
                     GetUserLocation();
                 });
@@ -124,15 +128,17 @@ namespace InvMe.View
 
         private void GetUserLocation()
         {
-            Device.BeginInvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(async () =>
             {
+                var userpos = await PermissonCheck();
+
                 map = new CustomMap()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
                     MapType = MapType.Street,
-                    longitude = position.Longitude,
-                    latitude = position.Latitude,
+                    longitude = userpos.Longitude,
+                    latitude = userpos.Latitude,
                     kind = "event"
                 };
 
@@ -141,13 +147,13 @@ namespace InvMe.View
                     WidthRequest = 320,
                     HeightRequest = 200,
                     MapType = MapType.Street,
-                    longitude = position.Longitude,
-                    latitude = position.Latitude,
+                    longitude = userpos.Longitude,
+                    latitude = userpos.Latitude,
                     kind = "meeting"
                 };
 
-                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromMeters(300)));
-                map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromMeters(300)));
+                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
+                map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
 
                 map2.CustomPins = new List<CustomPin> { };
 
@@ -160,6 +166,49 @@ namespace InvMe.View
                 map.isJustShow = false;
                 map2.isJustShow = false;
             });
+        }
+
+        private async Task<Plugin.Geolocator.Abstractions.Position> PermissonCheck()
+        {
+            try
+            {
+                if (GlobalVariables.AutomaticUserLocation)
+                {
+                    return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
+                }
+                else
+                {
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+
+                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                    {
+                        await DisplayAlert("Need location", "Gunna need that location", "OK");
+                    }
+
+                    var action = await DisplayActionSheet(GlobalVariables.Language.NeedUserLocation(), GlobalVariables.Language.OK(), GlobalVariables.Language.Cancel());
+
+                    if (action == GlobalVariables.Language.OK())
+                    {
+                        var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
+                        status = results[Permission.Location];
+
+                        if (status == PermissionStatus.Granted)
+                        {
+                            return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
+                        }
+                    }
+                    else
+                    {
+                        return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                    }
+
+                    return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                }
+            }
+            catch (Exception)
+            {
+                return new Plugin.Geolocator.Abstractions.Position(0, 0);
+            }
         }
 
         private void NomatterHowLong_Toggled(object sender, ToggledEventArgs e)

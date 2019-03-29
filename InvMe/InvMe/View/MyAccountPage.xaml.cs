@@ -27,9 +27,6 @@ namespace InvMe.View
             var page = new LoginPage();
 
             Navigation.PushModalAsync(new NavigationPage(page));
-            //{
-            //    Style = GlobalVariables.NavigationPageStyle
-            //});
 
             DisableEnableButtons(true);
         }
@@ -62,9 +59,6 @@ namespace InvMe.View
                         var page = new LoginPage();
 
                         Navigation.PushModalAsync(new NavigationPage(page));
-                        //{
-                        //    Style = GlobalVariables.NavigationPageStyle
-                        //});
                     }
 
                     DisableEnableButtons(true);
@@ -87,6 +81,7 @@ namespace InvMe.View
             Device.BeginInvokeOnMainThread(()=> {
                 //impressButton.IsEnabled = state;
                 logoutButton.IsEnabled = state;
+                settingsButton.IsEnabled = state;
                 deleteActivity.IsRunning = !state;
             });
         }
@@ -94,6 +89,11 @@ namespace InvMe.View
         private void BlockButton_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new BlockedPeoplePage());
+        }
+
+        private void SettingsButton_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new SettingsPage());
         }
     }
 }

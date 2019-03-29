@@ -65,5 +65,7 @@
         string SuccessReg();
 
         string BlockedUser();
+
+        string NeedUserLocation();
     }
 }

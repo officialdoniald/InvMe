@@ -25,6 +25,8 @@ namespace BLL
 
         public static bool HaveToLogin { get; set; }
 
+        public static bool AutomaticUserLocation { get; set; }
+
         public static Stream SelectedImageFromGallery { get; set; }
 
         public static bool IsUpdatedMyProfile { get; set; }
