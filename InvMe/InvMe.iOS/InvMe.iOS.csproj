@@ -336,12 +336,12 @@
     <BundleResource Include="Resources\tsettings.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\loginbackground.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\eventdatecalendar.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\loginbackground.jpeg" />
   </ItemGroup>
 </Project>
