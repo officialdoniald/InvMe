@@ -249,31 +249,7 @@
     <BundleResource Include="Resources\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\blur.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\borndate.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\calendar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\datefrom.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\dateto.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\email.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\eventmarker.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\facebook.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\graph.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\hashtags.png" />
@@ -297,15 +273,6 @@
     <BundleResource Include="Resources\monkey.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\name.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\onlineeventmarker.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\password.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\pin.png" />
   </ItemGroup>
   <ItemGroup>
@@ -316,27 +283,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\suser.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tadd.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tcalendar.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\thashtags.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\thome.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\town.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tsettings.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\eventdatecalendar.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\more.png" />
