@@ -164,7 +164,7 @@
 
         public string NeedUserLocation()
         {
-            return "Do you want to show your position on the maps? You can change this checking to automatically under Settings.";
+            return "Do you want to show your position on the map? You can change this checking to automatically under Settings.";
         }
     }
 }

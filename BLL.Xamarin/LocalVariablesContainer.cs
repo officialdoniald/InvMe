@@ -24,5 +24,7 @@ namespace BLL.Xamarin
         public static string settingspng = "settings.png";
 
         public static string homepng = "home.png";
+
+        public static int HowManyTimesUserLocationPopup = 0;
     }
 }

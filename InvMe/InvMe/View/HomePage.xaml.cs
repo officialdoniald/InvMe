@@ -149,6 +149,11 @@ namespace InvMe.View
                     eventListView.IsRefreshing = false;
 
                     eventListView.ItemsSource = bindableEventList;
+
+                    if (bindableEventList.Count != 0)
+                    {
+                        joinedEventNoItemLabel.IsVisible = false;
+                    }
                 });
             });
         }
@@ -204,6 +209,11 @@ namespace InvMe.View
         private void EventListView_Refreshing(object sender, EventArgs e)
         {
             GetTheEvents();
+        }
+
+        private void FilterButton_Clicked(object sender, EventArgs e)
+        {
+            filterGrid.IsVisible = !filterGrid.IsVisible;
         }
     }
 }

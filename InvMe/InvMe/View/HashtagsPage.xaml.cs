@@ -39,6 +39,11 @@ namespace InvMe.View
             Bindablehashtags = new HashtagsPageViewModel().GetHashtagsByUserID();
             
             hashtagsListView.ItemsSource = Bindablehashtags;
+
+            if (Bindablehashtags.Count != 0)
+            {
+                joinedEventNoItemLabel.IsVisible = false;
+            }
         }
         
         private void onlineSwitch_Toggled(object sender, ToggledEventArgs e)

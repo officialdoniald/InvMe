@@ -1,5 +1,6 @@
 ﻿using BLL;
 using BLL.ViewModel;
+using BLL.Xamarin;
 using BLL.Xamarin.MapClasses;
 using Model;
 using Plugin.Geolocator;
@@ -30,13 +31,13 @@ namespace InvMe.View
 
         #endregion
 
-        public AddEventPage()
-        {
-        }
+        public AddEventPage() { }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            LocalVariablesContainer.HowManyTimesUserLocationPopup += 1;
 
             InitializeAsync();
         }
@@ -172,36 +173,43 @@ namespace InvMe.View
         {
             try
             {
-                if (GlobalVariables.AutomaticUserLocation)
+                if (LocalVariablesContainer.HowManyTimesUserLocationPopup > 1)
                 {
-                    return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
-                }
-                else
-                {
-                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
-
-                    if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                    if (GlobalVariables.AutomaticUserLocation)
                     {
-                        await DisplayAlert("Need location", "Gunna need that location", "OK");
-                    }
-
-                    var action = await DisplayActionSheet(GlobalVariables.Language.NeedUserLocation(), GlobalVariables.Language.OK(), GlobalVariables.Language.Cancel());
-
-                    if (action == GlobalVariables.Language.OK())
-                    {
-                        var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
-                        status = results[Permission.Location];
-
-                        if (status == PermissionStatus.Granted)
-                        {
-                            return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
-                        }
+                        return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
                     }
                     else
                     {
+                        var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+
+                        if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
+                        {
+                            DisplayAlert("Need location", "Gunna need that location", "OK");
+                        }
+
+                        var action = await DisplayActionSheet(GlobalVariables.Language.NeedUserLocation(), GlobalVariables.Language.OK(), GlobalVariables.Language.Cancel());
+
+                        if (action == GlobalVariables.Language.OK())
+                        {
+                            var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
+                            status = results[Permission.Location];
+
+                            if (status == PermissionStatus.Granted)
+                            {
+                                return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
+                            }
+                        }
+                        else
+                        {
+                            return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                        }
+
                         return new Plugin.Geolocator.Abstractions.Position(0, 0);
                     }
-
+                }
+                else
+                {
                     return new Plugin.Geolocator.Abstractions.Position(0, 0);
                 }
             }

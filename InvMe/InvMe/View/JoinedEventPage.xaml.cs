@@ -41,6 +41,11 @@ namespace InvMe.View
                     bindableEventList = new JoinedEventPageViewModel().GetAttendedEvents();
 
                     eventListView.ItemsSource = bindableEventList;
+
+                    if (bindableEventList.Count != 0)
+                    {
+                        joinedEventNoItemLabel.IsVisible = false;
+                    }
                 });
             });
         }

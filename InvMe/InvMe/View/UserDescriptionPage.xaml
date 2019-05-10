@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.UserDescriptionPage"
              xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="0,25,0,0">
@@ -24,18 +27,13 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
-                            <!--<ColumnDefinition></ColumnDefinition>-->
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Source="name.png" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"></Image>
                         <Label Text="Name:" x:Name="firstnameLabel" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <Image Source="borndate.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"></Image>
                         <Label Text="Born date:" x:Name="bornDateLabel" Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <!--<Image Source="email.png" Grid.Row="0" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"></Image>-->
-                        <!--<Label x:Name="emailLabel" Grid.Row="1" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>-->
                     </Grid>
                 </StackLayout>
                 <Button Text="Report" IsVisible="False" x:Name="reportButton" Clicked="ReportButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>

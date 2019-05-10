@@ -1,4 +1,5 @@
 ﻿using BLL;
+using BLL.Helper;
 using BLL.ViewModel;
 using Model;
 using System;
@@ -48,29 +49,15 @@ namespace InvMe.View
                     reportButton.IsVisible = true;
                     blockButton.IsVisible = true;
                     Title = "User description";
+                    ToolbarItems.Clear();
                 }
                 else
                 {
-                    ToolbarItem updateToolbarItem = new ToolbarItem()
-                    {
-                        Text = "Update",
-                        Priority = 0
-                    };
-                    ToolbarItem settingsToolbarItem = new ToolbarItem()
-                    {
-                        Text = "Settings",
-                        Priority = 0
-                    };
-
-                    updateToolbarItem.Clicked += UpdateToolbarItem_Activated;
-                    settingsToolbarItem.Clicked += SettingsToolbarItem_Activated;
-
-                    ToolbarItems.Add(updateToolbarItem);
-                    ToolbarItems.Add(settingsToolbarItem);
+                    Title = "My profile";
                 }
 
                 firstnameLabel.Text = selectedUser.FIRSTNAME + " " + selectedUser.LASTNAME;
-                bornDateLabel.Text = selectedUser.BORNDATE.ToString(GlobalVariables.DateFormatForBornDate);
+                bornDateLabel.Text = GlobalFunctionsContainer.HowOld(selectedUser.BORNDATE) + " years old";
                 //emailLabel.Text = selectedUser.EMAIL;
             }
             else
@@ -80,19 +67,10 @@ namespace InvMe.View
                 blockedLabel.IsVisible = true;
                 blockButton.IsVisible = false;
                 reportButton.IsVisible = true;
+                ToolbarItems.Clear();
             }
         }
         
-        private void UpdateToolbarItem_Activated(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new UpdateProfilePage());
-        }
-
-        private void SettingsToolbarItem_Activated(object sender, System.EventArgs e)
-        {
-            Navigation.PushAsync(new MyAccountPage());
-        }
-
         private async void ReportButton_Clicked(object sender, EventArgs e)
         {
             var success = new UserDescriptionViewModel().ReportUser(selectedUser);
@@ -141,6 +119,20 @@ namespace InvMe.View
             {
                 await DisplayAlert("Success", "Successful blocked!", "OK");
                 await Navigation.PopToRootAsync();
+            }
+        }
+
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
+        {
+            var reported = await DisplayActionSheet("More", "Cancel", null, "Update profile", "Settings");
+
+            if (reported == "Update profile")
+            {
+                await Navigation.PushAsync(new UpdateProfilePage());
+            }
+            else if (reported == "Settings")
+            {
+                await Navigation.PushAsync(new MyAccountPage());
             }
         }
     }

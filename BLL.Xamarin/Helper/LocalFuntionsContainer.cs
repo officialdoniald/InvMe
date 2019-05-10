@@ -18,7 +18,7 @@ namespace BLL.Xamarin.Helper
             }
             catch (Exception)
             {
-                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, 0.ToString());
+                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.userlocationfile, 0.ToString());
             }
         }
 

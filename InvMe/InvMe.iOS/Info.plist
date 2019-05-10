@@ -49,9 +49,5 @@
 	<string>14</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.officialdoniald.invme</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
 </dict>
 </plist>

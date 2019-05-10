@@ -7,6 +7,9 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView RowHeight="100" ItemTapped="eventListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
+                <ListView.Header>
+                    <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                       <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">

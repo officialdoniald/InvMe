@@ -7,6 +7,9 @@
              xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin">
     <ContentPage.Content>
         <ListView RowHeight="80" HorizontalOptions="Center" VerticalOptions="StartAndExpand" Refreshing="userListView_Refreshing" IsPullToRefreshEnabled="True" ItemTapped="userListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding listViewWithPictureAndSomeText}" x:Name="userListView">
+            <ListView.Header>
+                <Label x:Name="joinedEventNoItemLabel" Text="No user found..." HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+            </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">

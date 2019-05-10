@@ -71,6 +71,11 @@ namespace InvMe.View
                     userListView.ItemsSource = listViewWithPictureAndSomeText;
 
                     userListView.IsRefreshing = false;
+
+                    if (listViewWithPictureAndSomeText.Count != 0)
+                    {
+                        joinedEventNoItemLabel.IsVisible = false;
+                    }
                 });
             });
         }
