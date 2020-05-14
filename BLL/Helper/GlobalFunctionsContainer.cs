@@ -84,57 +84,6 @@ namespace BLL.Helper
             return builder.ToString();
         }
         
-        public static async void SendEmail(string url, string email, string firstname, string lastname, string eventname, string from, string to, string town, string place)
-        {
-            string urls = "";
-
-            if (url == "eventcreate" || url == "joinedevent" || url == "sendmailtosubscribeduser")
-            {
-                string timef = "";
-                string timet = "";
-                string finallytown = "";
-
-                DateTimeOffset dto_begin = new DateTimeOffset();
-                DateTimeOffset.TryParse(from, out dto_begin);
-                dto_begin = dto_begin.ToLocalTime();
-
-                timef = dto_begin.ToString(GlobalVariables.DateFormatForEventsList);
-
-                if (from == to)
-                {
-                    timet = "Dosn't matter";
-                }
-                else
-                {
-                    DateTimeOffset dto_end = new DateTimeOffset();
-                    DateTimeOffset.TryParse(to, out dto_end);
-                    dto_end = dto_end.ToLocalTime();
-                    timet = dto_end.ToString(GlobalVariables.DateFormatForEventsList);
-                }
-
-                if (String.IsNullOrEmpty(town) || String.IsNullOrEmpty(place))
-                    finallytown = "Online";
-                else finallytown = town + ", " + place;
-
-                urls = String.Format("http://invme.hu/invmeapp/{0}.php?emaill={1}&nev={2}&eventname={3}&town={4}&from={5}&to={6}", url, email, firstname + "_" + lastname, eventname, finallytown, timef, timet);
-            }
-            else
-            {
-                urls = String.Format("http://invme.hu/invmeapp/{0}.php?emaill={1}&nev={2}", url, email, firstname + "_" + lastname);
-            }
-            try
-            {
-                Uri uri = new Uri(urls);
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urls);
-                request.Method = "GET";
-                WebResponse res = await request.GetResponseAsync();
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
         public static int HowOld(DateTime birthdate)
         {
             // Save today's date.

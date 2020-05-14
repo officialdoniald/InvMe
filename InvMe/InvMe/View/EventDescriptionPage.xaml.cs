@@ -230,8 +230,6 @@ namespace InvMe.View
                 {
                     await DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.SuccessFulSubsrcibed(), GlobalVariables.Language.OK());
 
-                    GlobalFunctionsContainer.SendEmail("joinedevent", GlobalVariables.ActualUser.EMAIL, GlobalVariables.ActualUser.FIRSTNAME, GlobalVariables.ActualUser.LASTNAME, ThisEvent.EVENTNAME, ThisEvent.FROM.ToString(), ThisEvent.TO.ToString(GlobalVariables.DateFormatForEventsAddAndDescription), ThisEvent.TOWN, ThisEvent.PLACE);
-
                     await Navigation.PopAsync();
                 }
                 else
@@ -268,25 +266,10 @@ namespace InvMe.View
 
         private async void ReportButton_Clicked(object sender, EventArgs e)
         {
-            var success = new EventDescriptionPageViewModel().ReportUser(ThisEvent);
+            var success = new EventDescriptionPageViewModel().ReportEvent(ThisEvent);
 
             if (success)
             {
-                try
-                {
-                    foreach (var item in GlobalVariables.DatabaseConnection.GetAttendedByEventID(ThisEvent.ID))
-                    {
-                        var user = GlobalVariables.DatabaseConnection.GetUserByID(item.USERID);
-                        
-                        string url = string.Format("http://invme.hu/php_files/petbelliesreppic.php?email={0}&nev={1}&host={2}", user.EMAIL, user.FIRSTNAME, 1);
-                        Uri uri1 = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res1 = await request.GetResponseAsync();
-                    }
-                }
-                catch (Exception) { }
-
                 await DisplayAlert("Success", "Thanks..", "OK");
                 await Navigation.PopToRootAsync();
             }

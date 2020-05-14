@@ -37,7 +37,7 @@ namespace BLL.ViewModel
             return GlobalVariables.DatabaseConnection.GetUserByID(id);
         }
 
-        public bool ReportUser(Events events)
+        public bool ReportEvent(Events events)
         {
             events.REPORTED = 1;
 

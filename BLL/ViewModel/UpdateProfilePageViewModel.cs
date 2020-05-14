@@ -39,18 +39,6 @@ namespace BLL.ViewModel
                 {
                     GlobalVariables.ActualUsersEmail = GlobalVariables.ActualUser.EMAIL;
 
-                    try
-                    {
-                        string url = String.Format("http://invme.hu/php_files/petbellieschangeemail.php?email={0}&nev={1}", GlobalVariables.ActualUser.EMAIL, GlobalVariables.ActualUser.FIRSTNAME);
-                        Uri uri = new Uri(url);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                        request.Method = "GET";
-                        WebResponse res = await request.GetResponseAsync();
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    
                     return UpdateUser(GlobalVariables.ActualUser);
                 }
             }

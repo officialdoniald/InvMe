@@ -54,8 +54,6 @@ namespace InvMe.View
                     {
                         await SecureStorage.SetAsync(LocalVariablesContainer.logintxt, string.Empty);
                         
-                        GlobalFunctionsContainer.SendEmail("deleteaccount", GlobalVariables.ActualUser.EMAIL, GlobalVariables.ActualUser.FIRSTNAME, GlobalVariables.ActualUser.LASTNAME, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
-
                         var page = new LoginPage();
 
                         App.SetRootPage(page);

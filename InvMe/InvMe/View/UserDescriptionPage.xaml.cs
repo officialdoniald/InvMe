@@ -85,24 +85,6 @@ namespace InvMe.View
 
             if (success)
             {
-                try
-                {
-                    //Aki reportolt
-                    string url = string.Format("http://invme.hu/php_files/petbelliesreppic.php?email={0}&nev={1}&host={2}", selectedUser.EMAIL, selectedUser.FIRSTNAME, 0);
-                    Uri uri = new Uri(url);
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-                    request.Method = "GET";
-                    WebResponse res = await request.GetResponseAsync();
-
-                    //Akinek a képe van
-                    string url1 = string.Format("http://invme.hu/php_files/petbelliesreppic.php?email={0}&nev={1}&host={2}", GlobalVariables.ActualUsersEmail, GlobalVariables.ActualUser.FIRSTNAME, 1);
-                    Uri uri1 = new Uri(url1);
-                    HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(uri1);
-                    request.Method = "GET";
-                    WebResponse res1 = await request.GetResponseAsync();
-                }
-                catch (Exception) { }
-
                 await DisplayAlert("Success", "Thanks..", "OK");
                 await Navigation.PopToRootAsync();
             }
