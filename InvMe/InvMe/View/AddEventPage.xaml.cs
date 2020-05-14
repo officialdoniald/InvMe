@@ -9,6 +9,7 @@ using Plugin.Permissions.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
@@ -72,7 +73,7 @@ namespace InvMe.View
             enddatePicker.MinimumDate = today;
             enddatePicker.MaximumDate = tomorrow;
 
-            if (Device.OS == TargetPlatform.iOS)
+            if (Device.RuntimePlatform == Device.iOS)
             {
                 var userpos = await PermissonCheck();
 
@@ -169,15 +170,25 @@ namespace InvMe.View
             });
         }
 
-        private async Task<Plugin.Geolocator.Abstractions.Position> PermissonCheck()
+        private async Task<Location> PermissonCheck()
         {
             try
             {
-                if (LocalVariablesContainer.HowManyTimesUserLocationPopup > 1)
+                if (LocalVariablesContainer.HowManyTimesUserLocationPopup >= 1)
                 {
                     if (GlobalVariables.AutomaticUserLocation)
                     {
-                        return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
+                        var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                        var location = await Geolocation.GetLocationAsync(request);
+
+                        if (location != null)
+                        {
+                            return location;
+                        }
+                        else
+                        {
+                            return new Location();
+                        }
                     }
                     else
                     {
@@ -195,27 +206,37 @@ namespace InvMe.View
                             var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
                             status = results[Permission.Location];
 
-                            if (status == PermissionStatus.Granted)
+                            if (status == Plugin.Permissions.Abstractions.PermissionStatus.Granted)
                             {
-                                return await CrossGeolocator.Current.GetPositionAsync(new TimeSpan(0, 0, 1));
+                                var request = new GeolocationRequest(GeolocationAccuracy.Medium);
+                                var location = await Geolocation.GetLocationAsync(request);
+
+                                if (location != null)
+                                {
+                                    return location;
+                                }
+                                else
+                                {
+                                    return new Location();
+                                }
                             }
                         }
                         else
                         {
-                            return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                            return new Location();
                         }
 
-                        return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                        return new Location();
                     }
                 }
                 else
                 {
-                    return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                    return new Location();
                 }
             }
             catch (Exception)
             {
-                return new Plugin.Geolocator.Abstractions.Position(0, 0);
+                return new Location();
             }
         }
 

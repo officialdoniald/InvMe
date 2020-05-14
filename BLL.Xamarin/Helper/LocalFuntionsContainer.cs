@@ -1,6 +1,6 @@
-﻿using BLL.Xamarin.FileStoreAndLoad;
-using Model;
+﻿using Model;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace BLL.Xamarin.Helper
@@ -10,32 +10,32 @@ namespace BLL.Xamarin.Helper
         /// <summary>
         /// Initialize the userloc.txt file.
         /// </summary>
-        public static void InitFirstUserLocationRequestFile()
+        public async static void InitFirstUserLocationRequestFile()
         {
             try
             {
-                GlobalVariables.AutomaticUserLocation = DependencyService.Get<IFileStoreAndLoad>().LoadText(LocalVariablesContainer.userlocationfile) == "0" ? false : true;
+                GlobalVariables.AutomaticUserLocation = await SecureStorage.GetAsync(LocalVariablesContainer.userlocationfile) == "0" ? false : true;
             }
             catch (Exception)
             {
-                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.userlocationfile, 0.ToString());
+                await SecureStorage.SetAsync(LocalVariablesContainer.userlocationfile, 0.ToString());
             }
         }
 
         /// <summary>
         /// Initializes the users email.
         /// </summary>
-        public static void InitializeUsersEmail()
+        public async static void InitializeUsersEmail()
         {
             try
             {
-                GlobalVariables.ActualUsersEmail = DependencyService.Get<IFileStoreAndLoad>().LoadText(LocalVariablesContainer.logintxt);
+                GlobalVariables.ActualUsersEmail = await SecureStorage.GetAsync(LocalVariablesContainer.logintxt);
 
                 if (!string.IsNullOrEmpty(GlobalVariables.ActualUsersEmail))
                 {
                     User user = GlobalVariables.DatabaseConnection.GetUserByEMAIL(GlobalVariables.ActualUsersEmail);
 
-                    if (user is null)
+                    if (user is null || string.IsNullOrEmpty(user.EMAIL))
                     {
                         GlobalVariables.HaveToLogin = true;
                     }
@@ -67,9 +67,9 @@ namespace BLL.Xamarin.Helper
         /// <summary>
         /// Initializes the users email variable.
         /// </summary>
-        public static void InitializeUsersEmailVariable()
+        public async static void InitializeUsersEmailVariable()
         {
-            GlobalVariables.ActualUsersEmail = DependencyService.Get<IFileStoreAndLoad>().LoadText(LocalVariablesContainer.logintxt);
+            GlobalVariables.ActualUsersEmail = await SecureStorage.GetAsync(LocalVariablesContainer.logintxt);
         }
 
 

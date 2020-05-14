@@ -11,9 +11,9 @@ namespace BLL.Xamarin
 
         public static Style NavigationPageStyle { get; set; }
 
-        public static string logintxt = "login.txt";
+        public static string logintxt = "login";
 
-        public static string userlocationfile = "userloc.txt";
+        public static string userlocationfile = "userloc";
 
         public static string addpng = "add.png";
 

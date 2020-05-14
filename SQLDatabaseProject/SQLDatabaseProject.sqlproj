@@ -66,6 +66,7 @@
     <Build Include="Tables\Friends.sql" />
     <Build Include="Tables\Attended.sql" />
     <Build Include="Tables\CasualImageTable.sql" />
+    <Build Include="Tables\BlockedPeople.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SQLDatabaseProject.publish.xml" />

@@ -1,6 +1,6 @@
 ﻿using BLL;
 using BLL.Xamarin;
-using BLL.Xamarin.FileStoreAndLoad;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -19,17 +19,17 @@ namespace InvMe.View
             }
 		}
 
-        private void OnAutomaticUserLocation_Toggled(object sender, ToggledEventArgs e)
+        private async void OnAutomaticUserLocation_Toggled(object sender, ToggledEventArgs e)
         {
             if (OnAutomaticUserLocation.IsToggled)
             {
-                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.userlocationfile, 1.ToString());
+                await SecureStorage.SetAsync(LocalVariablesContainer.userlocationfile, 1.ToString());
 
                 GlobalVariables.AutomaticUserLocation = true;
             }
             else
             {
-                FileStoreAndLoading.InsertToFile(LocalVariablesContainer.userlocationfile, 0.ToString());
+                await SecureStorage.SetAsync(LocalVariablesContainer.userlocationfile, 0.ToString());
 
                 GlobalVariables.AutomaticUserLocation = false;
             }

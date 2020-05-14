@@ -43,13 +43,13 @@ namespace InvMe.View
                     LocalFuntionsContainer.InitializeUser();
 
                     Device.BeginInvokeOnMainThread(() => {
-                        Navigation.PushModalAsync(new MainPage());
+                        App.SetRootPage(new MainPage());
                     });
                 }
                 else
                 {
                     Device.BeginInvokeOnMainThread(() => {
-                        Navigation.PushModalAsync(new MainPage());
+                        App.SetRootPage(new MainPage());
                     });
                 }
             });

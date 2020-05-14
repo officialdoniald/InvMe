@@ -59,79 +59,21 @@ namespace BLL.ViewModel
                 {
                     return GlobalVariables.Language.HaveToBiggerEndDateThanCurrentDate();
                 }
-                
+
                 events.MDESCRIPTION = "";
                 events.DESCRIPTION = "";
+                events.CREATEUID = GlobalVariables.ActualUser.ID;
 
                 int success = GlobalVariables.DatabaseConnection.InsertEventAsync(events);
 
-                if (success == -1)
+                if (success == 0)
                 {
                     return GlobalVariables.Language.SomethingWentWrong();
                 }
                 else
                 {
-                    Attended attend = new Attended();
-                    attend.USERID = GlobalVariables.ActualUser.ID;
-                    attend.EVENTID = success;
-
-                    bool successq = GlobalVariables.DatabaseConnection.InsertAttended(attend);
-
-                    if (successq)
-                    {
-                        GlobalFunctionsContainer.SendEmail("eventcreate", GlobalVariables.ActualUser.EMAIL, GlobalVariables.ActualUser.FIRSTNAME, GlobalVariables.ActualUser.LASTNAME, events.EVENTNAME, events.FROM.ToString(GlobalVariables.DateFormatForEventsAddAndDescription), events.TO.ToString(GlobalVariables.DateFormatForEventsAddAndDescription), events.TOWN, events.PLACE);
-                        
-                        List<Hashtags> hashtags = new List<Hashtags>();
-
-                        hashtags = GlobalVariables.DatabaseConnection.GetHashtag();
-
-                        List<User> usersHowsOkay = new List<User>();
-
-                        foreach (var item in hashtags)
-                        {
-                            if (item.UID != GlobalVariables.ActualUser.ID)
-                            {
-                                if (
-                                    (!string.IsNullOrEmpty(item.TOWN.ToLower()) &&
-                                    item.TOWN.ToLower().Contains(item.TOWN.ToLower())
-                                    ) ||
-                                    (!string.IsNullOrEmpty(item.HASHTAG.ToLower()) &&
-                                    (events.EVENTNAME.ToLower().Contains(item.HASHTAG.ToLower()) ||
-                                    events.DESCRIPTION.ToLower().Contains(item.HASHTAG.ToLower())))
-                                    )
-                                {
-                                    User user = new User();
-                                    user = GlobalVariables.DatabaseConnection.GetUserByID(item.UID);
-
-                                    bool wasThat = false;
-
-                                    foreach (var useritem in usersHowsOkay)
-                                    {
-                                        if (useritem.ID == user.ID)
-                                        {
-                                            wasThat = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!wasThat)
-                                    {
-                                        usersHowsOkay.Add(user);
-                                    }
-                                }
-                            }
-                        }
-
-                        foreach (var item in usersHowsOkay)
-                        {
-                            if (item.ID != GlobalVariables.ActualUser.ID)
-                            {
-                                GlobalFunctionsContainer.SendEmail("sendmailtosubscribeduser", item.EMAIL, item.FIRSTNAME, item.LASTNAME, events.EVENTNAME, events.FROM.ToString(GlobalVariables.DateFormatForEventsAddAndDescription), events.TO.ToString(GlobalVariables.DateFormatForEventsAddAndDescription), events.TOWN, events.PLACE);
-                            }
-                        }
-                    }
+                    return string.Empty;
                 }
-                return string.Empty;
             }
             catch (Exception ex)
             {

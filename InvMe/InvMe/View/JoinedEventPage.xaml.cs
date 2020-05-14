@@ -33,7 +33,6 @@ namespace InvMe.View
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    InitializeComponent();
                     eventListView.ItemsSource = null;
 
                     bindableEventList = new List<BindableEvent>();

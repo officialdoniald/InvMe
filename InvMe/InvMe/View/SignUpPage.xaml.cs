@@ -19,7 +19,7 @@ namespace InvMe.View
 
         private async void SignupButton_Clicked(object sender, EventArgs e)
         {
-            await Task.Run(async () =>
+            await Task.Run(() =>
            {
                SignUpPageViewModel signUpPageViewModel = new SignUpPageViewModel();
 
@@ -29,7 +29,7 @@ namespace InvMe.View
                    uploadActivity.IsRunning = true;
                });
 
-               string success = await signUpPageViewModel.SignUp(new User()
+               string success = signUpPageViewModel.SignUp(new User()
                {
                    EMAIL = emailEntry.Text,
                    PASSWORD = passwordEntry.Text,

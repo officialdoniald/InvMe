@@ -19,7 +19,7 @@ namespace InvMe.View
                 {
                     wasNotConn = true;
 
-                    await Navigation.PushModalAsync(new NavigationPage(new MainPage()));
+                    App.SetRootPage(new MainPage());
                 }
                 else
                 {
@@ -38,11 +38,7 @@ namespace InvMe.View
 
                     var page = new LoginPage();
 
-                    var navPage = new NavigationPage(page);
-
-                    NavigationPage.SetHasNavigationBar(navPage, false);
-
-                    await Navigation.PushModalAsync(navPage);
+                    App.SetRootPage(page);
                 }
                 else
                 {

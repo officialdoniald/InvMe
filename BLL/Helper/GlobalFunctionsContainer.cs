@@ -13,9 +13,8 @@ namespace BLL.Helper
     {
         public static void InitGlobalSettings()
         {
-            GlobalVariables.GlobalPassword = Properties.Resources.ResourceManager.GetString("GlobalPassword");
-            GlobalVariables.ConnectionString = Properties.Resources.ResourceManager.GetString("ConnectionString");
-            GlobalVariables.DatabaseConnection = new DAL.DatabaseConnection(GlobalVariables.ConnectionString);
+            GlobalVariables.WebApiURL = Properties.Resources.ResourceManager.GetString("WebApiURL");
+            GlobalVariables.DatabaseConnection = new DAL.DatabaseConnection();
         }
 
         public static bool IsValidEmailAddress(string emailaddress)

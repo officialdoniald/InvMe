@@ -2,10 +2,11 @@
 using Android.Content.PM;
 using Android.Views;
 using Android.OS;
-using Plugin.CurrentActivity;
 using ImageCircle.Forms.Plugin.Droid;
 using Android.Runtime;
-using Plugin.Permissions;
+using System;
+using Android;
+using Android.Support.V4.App;
 
 namespace InvMe.Droid
 {
@@ -22,15 +23,19 @@ namespace InvMe.Droid
             window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
             window.SetStatusBarColor(Android.Graphics.Color.Rgb(207, 178, 170));
             Xamarin.FormsMaps.Init(this, savedInstanceState);
-            CrossCurrentActivity.Current.Init(this, savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             ImageCircleRenderer.Init();
+
+            ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessFineLocation }, 1);
+
             LoadApplication(new App());
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
-            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 

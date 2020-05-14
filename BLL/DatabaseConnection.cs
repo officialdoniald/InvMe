@@ -1,4 +1,5 @@
-﻿using Model;
+﻿using BLL;
+using Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace DAL
         public string RequestJson(string uri)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://invmewebapp20190213124106.azurewebsites.net/api/" + uri);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
             request.Method = HttpMethod.Get;//Get Put Post Delete
             request.Headers.Add("Accept", "aplication/json");//we would like JSON as response
             var client = new HttpClient();
@@ -37,7 +38,7 @@ namespace DAL
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://invmewebapp20190213124106.azurewebsites.net/api/" + uri);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + uri);
             request.Method = method;
             request.Content = content;
 
@@ -51,7 +52,7 @@ namespace DAL
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri(GlobalVariables + url);
+            request.RequestUri = new Uri(GlobalVariables.WebApiURL + url);
             request.Method = HttpMethod.Delete;
 
             if (sendingObject != null)

@@ -1,11 +1,11 @@
 ﻿using BLL;
 using BLL.ViewModel;
 using BLL.Xamarin;
-using BLL.Xamarin.FileStoreAndLoad;
 using Plugin.Media;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -123,11 +123,11 @@ namespace InvMe.View
                 }
                 else
                 {
-                    Device.BeginInvokeOnMainThread(() =>
+                    Device.BeginInvokeOnMainThread(async () =>
                     {
-                        FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, emailEntry.Text);
-
-                        DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.SuccessFulUpdatedProfile(), GlobalVariables.Language.OK());
+                        await SecureStorage.SetAsync(LocalVariablesContainer.logintxt, emailEntry.Text);
+                        
+                        await DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.SuccessFulUpdatedProfile(), GlobalVariables.Language.OK());
                     });
                 }
 

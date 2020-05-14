@@ -10,7 +10,7 @@ namespace BLL.ViewModel
     {
         private string UpdateUser(User user)
         {
-            if (GlobalVariables.DatabaseConnection.UpdateUser(user.ID, user))
+            if (GlobalVariables.DatabaseConnection.UpdateUser(user))
             {
                 GlobalVariables.ActualUser = user;
 

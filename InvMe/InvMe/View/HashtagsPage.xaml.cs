@@ -44,6 +44,10 @@ namespace InvMe.View
             {
                 joinedEventNoItemLabel.IsVisible = false;
             }
+            else
+            {
+                joinedEventNoItemLabel.IsVisible = true;
+            }
         }
         
         private void onlineSwitch_Toggled(object sender, ToggledEventArgs e)

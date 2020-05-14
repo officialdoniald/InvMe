@@ -1,10 +1,10 @@
 ﻿using BLL;
 using BLL.ViewModel;
 using BLL.Xamarin;
-using BLL.Xamarin.FileStoreAndLoad;
 using Plugin.Connectivity;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,7 +25,7 @@ namespace InvMe.View
                 {
                     wasNotConn = true;
 
-                    await Navigation.PushModalAsync(new NoConnection(true));
+                    App.SetRootPage(new NoConnection(true));
                 }
                 else
                 {
@@ -38,7 +38,7 @@ namespace InvMe.View
 
         private void loginButton_Clicked(object sender, EventArgs e)
         {
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -56,11 +56,9 @@ namespace InvMe.View
                 }
                 else
                 {
-                    FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, emailEntry.Text);
+                    await SecureStorage.SetAsync(LocalVariablesContainer.logintxt, emailEntry.Text);
 
-                    Device.BeginInvokeOnMainThread(() =>
-                        Navigation.PushModalAsync(new JustActivityIndicator("login"))
-                    );
+                    App.SetRootPage(new JustActivityIndicator("login"));
                 }
 
                 Device.BeginInvokeOnMainThread(() =>

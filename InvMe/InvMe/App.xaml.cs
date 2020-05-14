@@ -42,6 +42,13 @@ namespace InvMe
             }
         }
 
+        public static void SetRootPage(Page newRootPage)
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                App.Current.MainPage = new NavigationPage(newRootPage);
+            });
+        }
+
         protected override void OnStart()
         {
             // Handle when your app starts

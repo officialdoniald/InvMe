@@ -7,9 +7,8 @@ namespace BLL
 {
     public static class GlobalVariables
     {
-        public static string ConnectionString { get; set; }
+        public static string WebApiURL { get; set; }
 
-        public static string GlobalPassword { get; set; }
 
         public static string SourceSelectedImageFromGallery { get; set; }
 
@@ -40,7 +39,5 @@ namespace BLL
         public static string DateFormatForEventsList { get; set; } = "MMM dd. HH:mm";
 
         public static string DateFormatForEventsAddAndDescription { get; set; } = "dddd, MMM dd yyyy HH:mm zzz";
-
-        public static string DateFormatForBornDate { get; set; } = "dd. MM. yyyy";
     }
 }

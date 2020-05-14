@@ -7,4 +7,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="ID" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="35e2e837-32e8-4066-9a22-9770b973896b" ChangeDateTime="05/13/2020 19:51:23">
+    <Property Name="ElementName" Value="[dbo].[BlockedPeople].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[BlockedPeople]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="163f1bb4-0a65-467e-856e-71252ab44836" ChangeDateTime="05/14/2020 14:27:22">
+    <Property Name="ElementName" Value="[dbo].[Events].[CREATEID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Events]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CREATEUID" />
+  </Operation>
 </Operations>

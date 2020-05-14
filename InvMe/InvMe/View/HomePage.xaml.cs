@@ -39,8 +39,7 @@ namespace InvMe.View
         {
             Task.Run(()=> {
                 Device.BeginInvokeOnMainThread(()=> {
-                    InitializeComponent();
-
+                    
                     eventListView.IsRefreshing = true;
 
                     List <Events> eventsFromDB = new List<Events>();

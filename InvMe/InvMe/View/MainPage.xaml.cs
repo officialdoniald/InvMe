@@ -27,7 +27,7 @@ namespace InvMe.View
                 {
                     wasNotConn = true;
 
-                    await Navigation.PushModalAsync(new NoConnection());
+                    App.SetRootPage(new NoConnection());
                 }
                 else
                 {

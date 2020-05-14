@@ -2,9 +2,9 @@
 using BLL.Helper;
 using BLL.ViewModel;
 using BLL.Xamarin;
-using BLL.Xamarin.FileStoreAndLoad;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,15 +18,15 @@ namespace InvMe.View
 			InitializeComponent ();
 		}
 
-        private void LogoutButton_Clicked(object sender, EventArgs e)
+        private async void LogoutButton_Clicked(object sender, EventArgs e)
         {
             DisableEnableButtons(false);
 
-            FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, String.Empty);
+            await SecureStorage.SetAsync(LocalVariablesContainer.logintxt, string.Empty);
 
             var page = new LoginPage();
 
-            Navigation.PushModalAsync(new NavigationPage(page));
+            App.SetRootPage(page);
 
             DisableEnableButtons(true);
         }
@@ -37,7 +37,7 @@ namespace InvMe.View
 
             if (action == GlobalVariables.Language.Delete())
             {
-                await Task.Run(() =>
+                await Task.Run(async () =>
                 {
                     DisableEnableButtons(false);
 
@@ -52,13 +52,13 @@ namespace InvMe.View
                     }
                     else
                     {
-                        FileStoreAndLoading.InsertToFile(LocalVariablesContainer.logintxt, string.Empty);
-
+                        await SecureStorage.SetAsync(LocalVariablesContainer.logintxt, string.Empty);
+                        
                         GlobalFunctionsContainer.SendEmail("deleteaccount", GlobalVariables.ActualUser.EMAIL, GlobalVariables.ActualUser.FIRSTNAME, GlobalVariables.ActualUser.LASTNAME, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
 
                         var page = new LoginPage();
 
-                        Navigation.PushModalAsync(new NavigationPage(page));
+                        App.SetRootPage(page);
                     }
 
                     DisableEnableButtons(true);

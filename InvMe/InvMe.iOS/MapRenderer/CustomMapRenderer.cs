@@ -3,7 +3,6 @@ using BLL.Xamarin.MapClasses;
 using CoreGraphics;
 using CoreLocation;
 using CustomRenderer.iOS;
-using FileStoringWithDependency.iOS.FileStoreAndLoad;
 using InvMe_.iOS.MapRenderer;
 using MapKit;
 using System;
@@ -24,7 +23,6 @@ namespace CustomRenderer.iOS
         UIView customPinView;
         List<CustomPin> customPins;
         private bool tappedOnTheElement = false;
-        FileStoreAndLoad fileFunctions = new FileStoreAndLoad();
         MKMapView nativeMap = new MKMapView();
         string filename = "";
         private UITapGestureRecognizer _tapRecogniser;

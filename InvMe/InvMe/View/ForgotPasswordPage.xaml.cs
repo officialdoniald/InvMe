@@ -17,14 +17,14 @@ namespace InvMe.View
 
         private void sendNewPassword_ClickedAsync(object sender, EventArgs e)
         {
-            Task.Run(async ()=> {
+            Task.Run(()=> {
 
                 Device.BeginInvokeOnMainThread(()=> {
                     loginActivator.IsRunning = true;
                     sendNewPassword.IsEnabled = false;
                 });
 
-                var success = await new ForgotPasswordPageViewModel().SendEmailAsync(emailEntry.Text);
+                var success = new ForgotPasswordPageViewModel().SendEmailAsync(emailEntry.Text);
 
                 if (String.IsNullOrEmpty(success))
                 {

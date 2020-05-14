@@ -19,7 +19,7 @@ namespace BLL.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -61,20 +61,11 @@ namespace BLL.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data Source=193.39.13.193;Persist Security Info=True;User ID=sa;Password=96kEHTPp2o0206;Initial Catalog=InvMe;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;.
+        ///   Looks up a localized string similar to http://193.39.13.210/api/InvMe/.
         /// </summary>
-        public static string ConnectionString {
+        public static string WebApiURL {
             get {
-                return ResourceManager.GetString("ConnectionString", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 96kEHTPp2o0206.
-        /// </summary>
-        public static string GlobalPassword {
-            get {
-                return ResourceManager.GetString("GlobalPassword", resourceCulture);
+                return ResourceManager.GetString("WebApiURL", resourceCulture);
             }
         }
     }

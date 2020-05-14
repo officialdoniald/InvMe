@@ -57,7 +57,15 @@ namespace InvMe.View
                 }
 
                 firstnameLabel.Text = selectedUser.FIRSTNAME + " " + selectedUser.LASTNAME;
-                bornDateLabel.Text = GlobalFunctionsContainer.HowOld(selectedUser.BORNDATE) + " years old";
+
+                string old = "-";
+
+                if (GlobalFunctionsContainer.HowOld(selectedUser.BORNDATE) >= 1)
+                {
+                    old = GlobalFunctionsContainer.HowOld(selectedUser.BORNDATE).ToString();
+                }
+
+                bornDateLabel.Text = old + " years old";
                 //emailLabel.Text = selectedUser.EMAIL;
             }
             else

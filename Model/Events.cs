@@ -71,5 +71,10 @@ namespace Model
         /// REPORTED
         /// </summary>
         public int REPORTED { get; set; }
+
+        /// <summary>
+        /// WHO CREATED
+        /// </summary>
+        public int CREATEUID { get; set; }
     }
 }
