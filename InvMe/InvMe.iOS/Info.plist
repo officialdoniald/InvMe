@@ -49,5 +49,7 @@
 	<string>14</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.officialdoniald.invme</string>
+  <key>UIUserInterfaceStyle</key>
+  <string>Light</string>
 </dict>
 </plist>

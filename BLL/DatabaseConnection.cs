@@ -84,7 +84,7 @@ namespace DAL
         {
             var attended = GetAttendedByUserAnEventID(attend.USERID,attend.EVENTID);
 
-            var message = Delete("Attended/DeleteAttendedByAttended", attended);
+            var message = Delete("Attended/DeleteAttendedByAttended/" + attended.ID, attended);
 
             if (message.StatusCode == System.Net.HttpStatusCode.OK)
             {
