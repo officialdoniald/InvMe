@@ -1,7 +1,6 @@
 ﻿using BLL;
 using BLL.ViewModel;
 using BLL.Xamarin;
-using BLL.Xamarin.MapClasses;
 using Model;
 using Plugin.Geolocator;
 using Plugin.Permissions;
@@ -27,8 +26,8 @@ namespace InvMe.View
 
         private Plugin.Geolocator.Abstractions.IGeolocator locator;
 
-        private CustomMap map;
-        private CustomMap map2;
+        private Xamarin.Forms.Maps.Map map;
+        private Xamarin.Forms.Maps.Map map2;
 
         #endregion
 
@@ -77,20 +76,18 @@ namespace InvMe.View
             {
                 var userpos = await PermissonCheck();
 
-                map = new CustomMap()
+                map = new Xamarin.Forms.Maps.Map()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
-                    MapType = MapType.Street,
-                    kind = "event"
+                    MapType = MapType.Street
                 };
 
-                map2 = new CustomMap()
+                map2 = new Xamarin.Forms.Maps.Map()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
-                    MapType = MapType.Street,
-                    kind = "meeting"
+                    MapType = MapType.Street
                 };
 
                 if (userpos.Longitude != 0 && userpos.Latitude != 0)
@@ -99,23 +96,16 @@ namespace InvMe.View
                     map2.IsShowingUser = true;
                 }
 
-                map2.CustomPins = new List<CustomPin> { };
-
-                map.CustomPins = new List<CustomPin> { };
+                map.MapClicked += Map_MapClicked;
+                map2.MapClicked += Map2_MapClicked;
 
                 eventStack.Children.Add(map);
 
                 meetStack.Children.Add(map2);
-
-                map.isJustShow = false;
-                map2.isJustShow = false;
             }
             else
             {
-                Task.Run(async () =>
-                {
-                    GetUserLocation();
-                });
+                GetUserLocation();
             }
         }
 
@@ -128,46 +118,96 @@ namespace InvMe.View
             });
         }
 
-        private void GetUserLocation()
+        private void Map_MapClicked(object sender, MapClickedEventArgs e)
         {
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                var userpos = await PermissonCheck();
+            var map = (Xamarin.Forms.Maps.Map)sender;
 
-                map = new CustomMap()
+            map.Pins.Clear();
+
+            map.Pins.Add(new Pin()
+            {
+                Position = e.Position,
+                Label = "Event place"
+            });
+
+            GlobalVariables.EventCord = e.Position.Latitude + ";" + e.Position.Longitude + "";
+        }
+
+        private void Map2_MapClicked(object sender, MapClickedEventArgs e)
+        {
+            var map = (Xamarin.Forms.Maps.Map)sender;
+
+            map.Pins.Clear();
+
+            map.Pins.Add(new Pin()
+            {
+                Position = e.Position,
+                Label = "Meeting place"
+            });
+
+            GlobalVariables.MeetingCord = e.Position.Latitude + ";" + e.Position.Longitude + "";
+        }
+
+        private async void GetUserLocation()
+        {
+            var userpos = await PermissonCheck();
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                map = new Xamarin.Forms.Maps.Map()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
-                    MapType = MapType.Street,
-                    longitude = userpos.Longitude,
-                    latitude = userpos.Latitude,
-                    kind = "event"
+                    MapType = MapType.Street
                 };
 
-                map2 = new CustomMap()
+                map2 = new Xamarin.Forms.Maps.Map()
                 {
                     WidthRequest = 320,
                     HeightRequest = 200,
-                    MapType = MapType.Street,
-                    longitude = userpos.Longitude,
-                    latitude = userpos.Latitude,
-                    kind = "meeting"
+                    MapType = MapType.Street
                 };
 
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
                 map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
 
-                map2.CustomPins = new List<CustomPin> { };
-
-                map.CustomPins = new List<CustomPin> { };
+                map.MapClicked += Map_MapClicked1;
+                map2.MapClicked += Map2_MapClicked1; ;
 
                 eventStack.Children.Add(map);
 
                 meetStack.Children.Add(map2);
-
-                map.isJustShow = false;
-                map2.isJustShow = false;
             });
+        }
+
+        private void Map_MapClicked1(object sender, MapClickedEventArgs e)
+        {
+            var map = (Xamarin.Forms.Maps.Map)sender;
+
+            map.Pins.Clear();
+
+            map.Pins.Add(new Pin()
+            {
+                Position = e.Position,
+                Label = "Event place"
+            });
+
+            GlobalVariables.EventCord = e.Position.Latitude + ";" + e.Position.Longitude + "";
+        }
+
+        private void Map2_MapClicked1(object sender, MapClickedEventArgs e)
+        {
+            var map = (Xamarin.Forms.Maps.Map)sender;
+
+            map.Pins.Clear();
+
+            map.Pins.Add(new Pin()
+            {
+                Position = e.Position,
+                Label = "Meeting place"
+            });
+
+            GlobalVariables.MeetingCord = e.Position.Latitude + ";" + e.Position.Longitude + "";
         }
 
         private async Task<Location> PermissonCheck()
@@ -183,6 +223,11 @@ namespace InvMe.View
 
                         if (location != null)
                         {
+                            Device.BeginInvokeOnMainThread(()=> {
+                                map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(300)));
+                                map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(300)));
+                            });
+
                             return location;
                         }
                         else
@@ -196,7 +241,7 @@ namespace InvMe.View
 
                         if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
                         {
-                            DisplayAlert("Need location", "Gunna need that location", "OK");
+                            await DisplayAlert("Need location", "Gunna need that location", "OK");
                         }
 
                         var action = await DisplayActionSheet(GlobalVariables.Language.NeedUserLocation(), GlobalVariables.Language.OK(), GlobalVariables.Language.Cancel());
@@ -213,6 +258,8 @@ namespace InvMe.View
 
                                 if (location != null)
                                 {
+
+
                                     return location;
                                 }
                                 else

@@ -101,7 +101,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomMapRenderer\CustomMapRenderer.cs" />
     <Compile Include="CustomRenderers\CustomEntryRenderer.cs" />
     <Compile Include="CustomRenderers\ExtendedViewCellRenderer.cs" />
     <Compile Include="MainActivity.cs" />

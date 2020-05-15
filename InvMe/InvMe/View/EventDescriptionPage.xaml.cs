@@ -2,7 +2,6 @@
 using BLL.Helper;
 using BLL.ViewModel;
 using BLL.Xamarin;
-using BLL.Xamarin.MapClasses;
 using Microsoft.AspNetCore.SignalR.Client;
 using Model;
 using Plugin.ExternalMaps;
@@ -193,40 +192,20 @@ namespace InvMe.View
                 mpin.Type = PinType.Place;
                 mpin.Address = "";
 
-                var pin = new CustomPin
-                {
-                    Pin = ppin,
-                    Id = "Xamarin",
-                    Url = "http://invme.Hu"
-                };
-                var pin2 = new CustomPin
-                {
-                    Pin = mpin,
-                    Id = "Xamarin2",
-                    Url = "http://invme.Hu"
-                };
-
-                CustomMap eventPlaceMap = new CustomMap()
+                Map eventPlaceMap = new Map()
                 {
                     IsShowingUser = true,
-                    HeightRequest = 200,
-                    isJustShow = true,
-                    longitude = pin.Pin.Position.Longitude,
-                    latitude = pin.Pin.Position.Latitude
+                    HeightRequest = 200
                 };
-                eventPlaceMap.CustomPins = new List<CustomPin> { pin };
-                eventPlaceMap.Pins.Add(pin.Pin);
+                eventPlaceMap.Pins.Add(ppin);
 
-                CustomMap meetPlaceMap = new CustomMap()
+                Map meetPlaceMap = new Map()
                 {
                     IsShowingUser = true,
-                    HeightRequest = 200,
-                    isJustShow = true,
-                    longitude = pin2.Pin.Position.Longitude,
-                    latitude = pin2.Pin.Position.Latitude
+                    HeightRequest = 200
                 };
-                meetPlaceMap.CustomPins = new List<CustomPin> { pin2 };
-                meetPlaceMap.Pins.Add(pin2.Pin);
+                
+                meetPlaceMap.Pins.Add(mpin);
 
                 eventStack.Children.Add(eventPlaceMap);
                 meetStack.Children.Add(meetPlaceMap);

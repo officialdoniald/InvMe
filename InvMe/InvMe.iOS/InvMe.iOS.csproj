@@ -118,9 +118,6 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
-    <Compile Include="MapRenderer\BasicMapAnnotation.cs" />
-    <Compile Include="MapRenderer\CustomMapRenderer.cs" />
-    <Compile Include="MapRenderer\CustomMKAnnotationView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
