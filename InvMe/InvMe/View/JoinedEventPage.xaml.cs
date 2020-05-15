@@ -45,6 +45,10 @@ namespace InvMe.View
                     {
                         joinedEventNoItemLabel.IsVisible = false;
                     }
+                    else
+                    {
+                        joinedEventNoItemLabel.IsVisible = true;
+                    }
                 });
             });
         }

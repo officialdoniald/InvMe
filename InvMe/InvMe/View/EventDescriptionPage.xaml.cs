@@ -3,6 +3,7 @@ using BLL.Helper;
 using BLL.ViewModel;
 using BLL.Xamarin;
 using BLL.Xamarin.MapClasses;
+using Microsoft.AspNetCore.SignalR.Client;
 using Model;
 using Plugin.ExternalMaps;
 using System;
@@ -15,9 +16,9 @@ using Xamarin.Forms.Xaml;
 
 namespace InvMe.View
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class EventDescriptionPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class EventDescriptionPage : ContentPage
+    {
         #region Properties
 
         ToolbarItem submitordeleteButton = new ToolbarItem();
@@ -25,7 +26,7 @@ namespace InvMe.View
         Events ThisEvent = new Events();
 
         Attended attend = new Attended();
-        
+
         bool isAttended = false;
 
         Pin ppin = new Pin();
@@ -55,7 +56,69 @@ namespace InvMe.View
 
             SeeTheEvent();
         }
-        
+
+        private async void ConnectToSignalR()
+        {
+            var hubConnection = new HubConnectionBuilder().WithAutomaticReconnect().WithUrl("http://193.39.13.210" + "/InvMeHub").Build();
+
+            await hubConnection.StartAsync();
+
+            hubConnection.On<int, bool>("ReceiveMessage", (eventid, attend) =>
+            {
+                var count = Convert.ToInt32(howManyLabel.Text.Split('/')[1]);
+
+                if (attend)
+                {
+                    count++;
+                }
+                else
+                {
+                    count--;
+                }
+
+                if (ThisEvent.HOWMANY == 1)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        howManyLabel.Text = "Anyone" + "/" + count;
+                    });
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + count;
+                    });
+                }
+
+                if (!isAttended && ThisEvent.HOWMANY <= count)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        ToolbarItems.Clear();
+                    });
+                }
+                else if (isAttended)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        ToolbarItems.Clear();
+
+                        submitordeleteButton.Clicked += submitordeleteButton_Clicked;
+                        ToolbarItems.Add(submitordeleteButton);
+
+                        if (isAttended) submitordeleteButton.Text = "Leave";
+                        else submitordeleteButton.Text = "Attend";
+                    });
+                }
+            });
+
+            //async Task SendMessage(string user, string message)
+            //{
+            //    await hubConnection.InvokeAsync("SendMessage", user, message);
+            //}
+        }
+
         private void isAttendedorNot()
         {
             if (new EventDescriptionPageViewModel().GetAttended(ThisEvent.ID))
@@ -72,6 +135,8 @@ namespace InvMe.View
 
         private void SeeTheEvent()
         {
+            ConnectToSignalR();
+
             List<Attended> attendedToThisEvent = new EventDescriptionPageViewModel().GetAttendedByEventID(ThisEvent.ID);
 
             eventNameLabel.Text = ThisEvent.EVENTNAME;
@@ -210,7 +275,7 @@ namespace InvMe.View
             if (isAttended)
             {
                 success = new EventDescriptionPageViewModel().DeleteAttended(attend);
-                
+
                 if (success)
                 {
                     await DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.SuccessFulUnSubscibed(), GlobalVariables.Language.OK());
