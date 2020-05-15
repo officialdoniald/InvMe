@@ -64,51 +64,54 @@ namespace InvMe.View
 
             hubConnection.On<int, bool>("ReceiveMessage", (eventid, attend) =>
             {
-                var count = Convert.ToInt32(howManyLabel.Text.Split('/')[1]);
+                if (eventid == ThisEvent.ID)
+                {
+                    var count = Convert.ToInt32(howManyLabel.Text.Split('/')[1]);
 
-                if (attend)
-                {
-                    count++;
-                }
-                else
-                {
-                    count--;
-                }
-
-                if (ThisEvent.HOWMANY == 1)
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+                    if (attend)
                     {
-                        howManyLabel.Text = "Anyone" + "/" + count;
-                    });
-                }
-                else
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+                        count++;
+                    }
+                    else
                     {
-                        howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + count;
-                    });
-                }
+                        count--;
+                    }
 
-                if (!isAttended && ThisEvent.HOWMANY <= count)
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+                    if (ThisEvent.HOWMANY == 1)
                     {
-                        ToolbarItems.Clear();
-                    });
-                }
-                else if (isAttended)
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            howManyLabel.Text = "Anyone" + "/" + count;
+                        });
+                    }
+                    else
                     {
-                        ToolbarItems.Clear();
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + count;
+                        });
+                    }
 
-                        submitordeleteButton.Clicked += submitordeleteButton_Clicked;
-                        ToolbarItems.Add(submitordeleteButton);
+                    if (!isAttended && ThisEvent.HOWMANY <= count)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            ToolbarItems.Clear();
+                        });
+                    }
+                    else if (isAttended)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            ToolbarItems.Clear();
 
-                        if (isAttended) submitordeleteButton.Text = "Leave";
-                        else submitordeleteButton.Text = "Attend";
-                    });
+                            submitordeleteButton.Clicked += submitordeleteButton_Clicked;
+                            ToolbarItems.Add(submitordeleteButton);
+
+                            if (isAttended) submitordeleteButton.Text = "Leave";
+                            else submitordeleteButton.Text = "Attend";
+                        });
+                    }
                 }
             });
 
