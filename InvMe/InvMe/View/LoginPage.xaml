@@ -3,13 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.LoginPage"
              xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin">
-    <ScrollView>
-        <RelativeLayout Padding="0">
+        <Grid>
             <Image
             Aspect="AspectFill"
-            Source="loginbackground.jpeg"
-            RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
-            RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
+            Source="loginbackground.jpeg">
             </Image>
             <StackLayout Orientation="Vertical"
                  VerticalOptions="EndAndExpand" 
@@ -30,6 +27,5 @@
                 <Label HorizontalOptions="Center" TextColor="White" Text="Are you not a member yet?" Style="{StaticResource NormalLabelStyle}"/>
                 <Button x:Name="signUpButton" Text="Sign up" Clicked="signUpButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
             </StackLayout>
-        </RelativeLayout>
-    </ScrollView >
+        </Grid>
 </ContentPage>
