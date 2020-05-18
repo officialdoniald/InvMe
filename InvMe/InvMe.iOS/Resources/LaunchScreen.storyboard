@@ -20,22 +20,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="198" translatesAutoresizingMaskIntoConstraints="NO" image="iconsplash.png" misplaced="YES">
                                 <rect key="frame" x="166" y="327" width="83" height="83"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InvMe! 2019" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6108" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
-                                <rect key="frame" x="0.0" y="616" width="414" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
-                                <nil key="highlightedColor"/>
-                                <rect key="contentStretch" x="0" y="0" width="1" height="1"/>
-                            </label>
                         </subviews>
                         <constraints>
                             <constraint id="613" firstItem="198" firstAttribute="centerY" secondItem="yd7-JS-zBw" secondAttribute="centerY"/>
                             <constraint id="822" firstAttribute="trailingMargin" secondItem="198" secondAttribute="trailing" constant="145"/>
                             <constraint id="823" firstItem="198" firstAttribute="leading" secondItem="yd7-JS-zBw" secondAttribute="leadingMargin" constant="146"/>
                             <constraint id="1043" firstItem="198" firstAttribute="top" secondItem="Y8P-hJ-Z43" secondAttribute="bottom" constant="307"/>
-                            <constraint id="6109" firstItem="6108" firstAttribute="top" secondItem="198" secondAttribute="bottom" constant="206"/>
-                            <constraint id="6522" firstItem="6108" firstAttribute="trailing" secondItem="yd7-JS-zBw" secondAttribute="trailingMargin" constant="20"/>
-                            <constraint id="6523" firstAttribute="leadingMargin" secondItem="6108" secondAttribute="leading" constant="20"/>
                         </constraints>
                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.75686274509803919" green="0.65098039215686276" blue="0.61960784313725492" alpha="1"/>
                     </view>
