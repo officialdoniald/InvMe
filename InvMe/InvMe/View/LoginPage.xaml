@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.LoginPage"
              xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin">
+    <ScrollView>
         <Grid>
             <Image
             Aspect="AspectFill"
@@ -28,4 +29,5 @@
                 <Button x:Name="signUpButton" Text="Sign up" Clicked="signUpButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
             </StackLayout>
         </Grid>
+    </ScrollView>
 </ContentPage>

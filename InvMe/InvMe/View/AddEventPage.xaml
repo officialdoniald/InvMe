@@ -8,52 +8,34 @@
         <ScrollView>
             <StackLayout Spacing="10">
                 <Entry x:Name="eventNameEntry" Style="{StaticResource NormalEntryStyle}" Placeholder="Event name"></Entry>
-                <Grid IsVisible="True">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="No matter how long" Style="{StaticResource NormalLabelStyle}"></Label>
-                    <Switch Grid.Column="1" x:Name="nomatterHowLong" Toggled="NomatterHowLong_Toggled"></Switch>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
-                    </Grid.RowDefinitions>
-                    <Label Grid.Column="0" Grid.Row="0" Text="Start Date" Style="{StaticResource NormalLabelStyle}"></Label>
-                    <Label Grid.Column="1" Grid.Row="0" Text="Time" Style="{StaticResource NormalLabelStyle}"></Label>
-                    <DatePicker x:Name="whenbegindatePicker" Grid.Column="0" Grid.Row="1"></DatePicker>
-                    <TimePicker x:Name="beginclock" Grid.Column="1" Grid.Row="1" WidthRequest="125"></TimePicker>
-                </Grid>
-                <StackLayout x:Name="toStackLayout">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Column="0" Grid.Row="0" Text="End Date" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <Label Grid.Column="1" Grid.Row="0" Text="Time" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <DatePicker x:Name="enddatePicker" Grid.Column="0" Grid.Row="1"></DatePicker>
-                        <TimePicker x:Name="endclock" Grid.Column="1" Grid.Row="1" WidthRequest="125"></TimePicker>
-                    </Grid>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Grid.Column="0" Text="No matter how long" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
+                    <Switch Grid.Column="1" x:Name="nomatterHowLong" Toggled="NomatterHowLong_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Online event" Style="{StaticResource NormalLabelStyle}"></Label>
-                    <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled"></Switch>
-                </Grid>
+                <StackLayout Spacing="2">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="2">
+                        <Label Text="Start Date" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <Label Text="Start Time" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <DatePicker x:Name="whenbegindatePicker"></DatePicker>
+                        <TimePicker x:Name="beginclock" WidthRequest="125" HorizontalOptions="EndAndExpand"></TimePicker>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout x:Name="toStackLayout" Spacing="2">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="End Date" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <Label Text="End Time" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <DatePicker x:Name="enddatePicker"></DatePicker>
+                        <TimePicker x:Name="endclock" WidthRequest="125" HorizontalOptions="EndAndExpand"></TimePicker>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Grid.Column="0" Text="Online event" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
+                    <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
+                </StackLayout>
                 <StackLayout x:Name="mapStackLayout">
                     <Entry x:Name="eventTownEntry" Placeholder="Event Town:" Style="{StaticResource NormalEntryStyle}"></Entry>
                     <Entry x:Name="eventPlaceEntry" Placeholder="Event place: " Style="{StaticResource NormalEntryStyle}"></Entry>
@@ -62,14 +44,10 @@
                     <Label Text="Where do we meet:" Style="{StaticResource CommentLabelStyle}"></Label>
                     <StackLayout Margin="15,0,15,0" x:Name="meetStack"></StackLayout>
                 </StackLayout>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="No matter how many person join" Style="{StaticResource NormalLabelStyle}"></Label>
-                    <Switch Grid.Column="1" x:Name="enyoneSwitch" Toggled="EnyoneSwitch_Toggled"></Switch>
-                </Grid>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Grid.Column="0" Text="No matter how many person join" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
+                    <Switch Grid.Column="1" x:Name="enyoneSwitch" Toggled="EnyoneSwitch_Toggled" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></Switch>
+                </StackLayout>
                 <StackLayout x:Name="howmanypersonStackLayout">
                     <Entry Grid.Column="1" x:Name="howmanyPersonEntry" Placeholder="How many person can join" Keyboard="Numeric" Style="{StaticResource NormalEntryStyle}"></Entry>
                 </StackLayout>

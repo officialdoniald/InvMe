@@ -20,7 +20,7 @@
                 <Setter Property="BarTextColor" Value="White"/>
             </Style>
             <Style TargetType="ListView" ApplyToDerivedTypes="true">
-                <Setter Property="SeparatorColor" Value="Gray"/>
+                <Setter Property="SeparatorColor" Value="Transparent"/>
             </Style>
             <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="true">
                 <Setter Property="HorizontalOptions" Value="Center"></Setter>

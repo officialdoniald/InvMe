@@ -4,15 +4,9 @@
              x:Class="InvMe.View.SettingsPage"
              Title="Settings">
     <ContentPage.Content>
-        <StackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Text="Get automatic your location" Style="{StaticResource NormalLabelStyle}"/>
-                <Switch Grid.Column="1" x:Name="OnAutomaticUserLocation" Toggled="OnAutomaticUserLocation_Toggled"/>
-            </Grid>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+            <Label Text="Get automatic your location" Style="{StaticResource NormalLabelStyle}"/>
+            <Switch x:Name="OnAutomaticUserLocation" Toggled="OnAutomaticUserLocation_Toggled" HorizontalOptions="EndAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
