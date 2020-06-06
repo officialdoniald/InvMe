@@ -9,13 +9,13 @@
             <StackLayout Spacing="10">
                 <Entry x:Name="eventNameEntry" Style="{StaticResource NormalEntryStyle}" Placeholder="Event"></Entry>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Grid.Column="0" Text="No matter how long" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
+                    <Label Grid.Column="0" Text="No matter how long:" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch Grid.Column="1" x:Name="nomatterHowLong" Toggled="NomatterHowLong_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
                 <StackLayout Spacing="2">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="2">
-                        <Label Text="Start Date" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <Label Text="Start Time" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
+                        <Label Text="Start Date:" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <Label Text="Start Time:" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <DatePicker x:Name="whenbegindatePicker"></DatePicker>
@@ -24,8 +24,8 @@
                 </StackLayout>
                 <StackLayout x:Name="toStackLayout" Spacing="2">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Label Text="End Date" Style="{StaticResource NormalLabelStyle}"></Label>
-                        <Label Text="End Time" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
+                        <Label Text="End Date:" Style="{StaticResource NormalLabelStyle}"></Label>
+                        <Label Text="End Time:" Style="{StaticResource NormalLabelStyle}" HorizontalOptions="EndAndExpand" Margin="0,0,15,0"></Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                         <DatePicker x:Name="enddatePicker"></DatePicker>
@@ -33,7 +33,7 @@
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                    <Label Grid.Column="0" Text="Online event" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
+                    <Label Grid.Column="0" Text="Online event:" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
                 <StackLayout x:Name="mapStackLayout">
@@ -49,7 +49,7 @@
                     <Switch Grid.Column="1" x:Name="enyoneSwitch" Toggled="EnyoneSwitch_Toggled" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></Switch>
                 </StackLayout>
                 <StackLayout x:Name="howmanypersonStackLayout">
-                    <Entry Grid.Column="1" x:Name="howmanyPersonEntry" Placeholder="How many person can join" Keyboard="Numeric" Style="{StaticResource NormalEntryStyle}"></Entry>
+                    <Entry Grid.Column="1" x:Name="howmanyPersonEntry" Placeholder="How many person can join:" Keyboard="Numeric" Style="{StaticResource NormalEntryStyle}"></Entry>
                 </StackLayout>
                 <Button Text="Add event" x:Name="submitButton" Clicked="SubmitButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
                 <ActivityIndicator IsRunning="False" x:Name="addActivityIndicator"></ActivityIndicator>

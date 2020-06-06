@@ -20,12 +20,12 @@
             <Button x:Name="signupButton" IsEnabled="False" Clicked="SignupButton_Clicked" Text="Sign Up" Style="{StaticResource NormalButtonStyle}"></Button>
             <StackLayout HorizontalOptions="Center">
                 <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" Text="By clicking Sign up, you agree to our" />
-                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#CFB2AA" FontAttributes="Italic" Text="Terms and Condition.">
+                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#70C498" FontAttributes="Italic" Text="Terms and Condition.">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#CFB2AA" FontAttributes="Italic" Text=" and Privacy Policy.">
+                <Label Style="{StaticResource NormalLabelStyle}" HorizontalOptions="Center" TextColor="#70C498" FontAttributes="Italic" Text=" and Privacy Policy.">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
                     </Label.GestureRecognizers>

@@ -28,7 +28,7 @@ namespace InvMe.Droid
             Window window = this.Window;
             window.ClearFlags(WindowManagerFlags.TranslucentStatus);
             window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
-            window.SetStatusBarColor(Android.Graphics.Color.Rgb(207, 178, 170));
+            window.SetStatusBarColor(Color.Rgb(112, 196, 152));
         }
 
         protected override void OnResume()

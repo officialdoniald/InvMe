@@ -27,7 +27,7 @@
                             <constraint id="823" firstItem="198" firstAttribute="leading" secondItem="yd7-JS-zBw" secondAttribute="leadingMargin" constant="146"/>
                             <constraint id="1043" firstItem="198" firstAttribute="top" secondItem="Y8P-hJ-Z43" secondAttribute="bottom" constant="307"/>
                         </constraints>
-                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.75686274509803919" green="0.65098039215686276" blue="0.61960784313725492" alpha="1"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.4392156862745098" green="0.7686274509803922" blue="0.596078431372549" alpha="1"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAI-xm-WK6" userLabel="First Responder" sceneMemberID="firstResponder"/>

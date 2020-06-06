@@ -21,7 +21,7 @@ namespace InvMe.Droid
             Window window = this.Window;
             window.ClearFlags(WindowManagerFlags.TranslucentStatus);
             window.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
-            window.SetStatusBarColor(Android.Graphics.Color.Rgb(207, 178, 170));
+            window.SetStatusBarColor(Android.Graphics.Color.Rgb(112, 196, 152));
             Xamarin.FormsMaps.Init(this, savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

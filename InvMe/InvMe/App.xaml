@@ -10,13 +10,13 @@
             <x:String x:Key="NormalFontColor">Black</x:String>
             <x:String x:Key="PictureFontColor">White</x:String>
             <x:String x:Key="HyperLinkFontColor">Black</x:String>
-            <x:String x:Key="ButtonBackgroundColor">#CFB2AA</x:String>
+            <x:String x:Key="ButtonBackgroundColor">#70C498</x:String>
             
             <Style TargetType="StackLayout" ApplyToDerivedTypes="true">
                 <Setter Property="Margin" Value="0,10,0,0"/>
             </Style>
             <Style TargetType="NavigationPage" ApplyToDerivedTypes="true">
-                <Setter Property="BarBackgroundColor" Value="#CFB2AA"/>
+                <Setter Property="BarBackgroundColor" Value="#70C498"/>
                 <Setter Property="BarTextColor" Value="White"/>
             </Style>
             <Style TargetType="ListView" ApplyToDerivedTypes="true">
@@ -60,7 +60,7 @@
                 <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
                 <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="HeightRequest" Value="50"/> 
+                <Setter Property="HeightRequest" Value="{StaticResource NormalButtonSize}"/> 
                 <Setter Property="Margin" Value="15,0,15,0"/>
             </Style>
             <Style TargetType="Button" x:Key="NormalButtonStyle">
