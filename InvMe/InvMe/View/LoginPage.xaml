@@ -3,31 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.LoginPage"
              xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin">
-    <ScrollView>
-        <Grid>
-            <Image
-            Aspect="AspectFill"
-            Source="loginbackground.jpeg">
-            </Image>
-            <StackLayout Orientation="Vertical"
-                 VerticalOptions="EndAndExpand" 
-                 Margin="0,0,0,50"
-                 RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width}"
-                 RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height}">
-                <Label Text="E-Mail:" TextColor="White" Style="{StaticResource CommentLabelStyle}"/>
-                <customControls:CustomEntry x:Name="emailEntry" BackgroundColor="Transparent" Margin="15,0,15,0" TextColor="Black" Keyboard="Email" Completed="Handle_CompletedOnEmail"></customControls:CustomEntry>
-                <Label Text="Password:" TextColor="White" Style="{StaticResource CommentLabelStyle}"/>
-                <customControls:CustomEntry x:Name="pwEntry" Margin="15,0,15,0" BackgroundColor="Transparent" IsPassword="True" TextColor="Black" Completed="Handle_CompletedOnPassword"></customControls:CustomEntry>
-                <Label HorizontalOptions="Center" Text="Forgot password" TextColor="White" Style="{StaticResource LinkLabelStyle}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <Button x:Name="loginButton" Text="Login" Clicked="loginButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
-                <ActivityIndicator x:Name="loginActivator" IsRunning="false" Color="White"></ActivityIndicator>
-                <Label HorizontalOptions="Center" TextColor="White" Text="Are you not a member yet?" Style="{StaticResource NormalLabelStyle}"/>
-                <Button x:Name="signUpButton" Text="Sign up" Clicked="signUpButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
-            </StackLayout>
-        </Grid>
-    </ScrollView>
+    <StackLayout Margin="0,100,0,0" VerticalOptions="FillAndExpand">
+        <Image Source="icon.png" HeightRequest="75" WidthRequest="75" VerticalOptions="Start" HorizontalOptions="Center"/>
+        <StackLayout VerticalOptions="CenterAndExpand" Margin="0,100,0,0">
+            <Label Text="E-Mail:" TextColor="Black" Style="{StaticResource CommentLabelStyle}"/>
+            <Entry x:Name="emailEntry" BackgroundColor="Transparent" Margin="15,0,15,0" TextColor="Black" Keyboard="Email" Completed="Handle_CompletedOnEmail"></Entry>
+            <Label Text="Password:" TextColor="Black" Style="{StaticResource CommentLabelStyle}"/>
+            <Entry x:Name="pwEntry" Margin="15,0,15,0" BackgroundColor="Transparent" IsPassword="True" TextColor="Black" Completed="Handle_CompletedOnPassword"></Entry>
+            <Button x:Name="loginButton" Text="Login" Clicked="loginButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
+            <Label HorizontalOptions="Center" Text="Forgot password" TextColor="Black" Style="{StaticResource LinkLabelStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                </Label.GestureRecognizers>
+            </Label>
+            <ActivityIndicator x:Name="loginActivator" IsRunning="false" Color="White"></ActivityIndicator>
+        </StackLayout>
+        <StackLayout VerticalOptions="EndAndExpand" Margin="0,0,0,100">
+            <Label HorizontalOptions="Center" TextColor="Black" Text="Are you not a member yet?" Style="{StaticResource NormalLabelStyle}"/>
+            <Button x:Name="signUpButton" Text="Sign up" Clicked="signUpButton_Clicked" Style="{StaticResource NormalButtonStyle}"/>
+        </StackLayout>
+    </StackLayout>
 </ContentPage>
