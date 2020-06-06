@@ -43,7 +43,7 @@ namespace InvMe.View
             if (file == null) return;
 
             addedPhoto = true;
-            f = file.GetStream();
+            f = file.GetStreamWithImageRotatedForExternalStorage();
             GlobalVariables.SourceSelectedImageFromGallery = file.Path;
             GlobalVariables.SelectedImageFromGallery = f;
 
