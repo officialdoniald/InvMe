@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Spacing="10">
-                <Entry x:Name="eventNameEntry" Style="{StaticResource NormalEntryStyle}" Placeholder="Event name"></Entry>
+                <Entry x:Name="eventNameEntry" Style="{StaticResource NormalEntryStyle}" Placeholder="Event"></Entry>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Grid.Column="0" Text="No matter how long" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch Grid.Column="1" x:Name="nomatterHowLong" Toggled="NomatterHowLong_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
@@ -37,8 +37,8 @@
                     <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
                 <StackLayout x:Name="mapStackLayout">
-                    <Entry x:Name="eventTownEntry" Placeholder="Event Town:" Style="{StaticResource NormalEntryStyle}"></Entry>
-                    <Entry x:Name="eventPlaceEntry" Placeholder="Event place: " Style="{StaticResource NormalEntryStyle}"></Entry>
+                    <Entry x:Name="eventTownEntry" Placeholder="Town" Style="{StaticResource NormalEntryStyle}"></Entry>
+                    <Entry x:Name="eventPlaceEntry" Placeholder="Place" Style="{StaticResource NormalEntryStyle}"></Entry>
                     <Label Text="Event place:" Style="{StaticResource CommentLabelStyle}"></Label>
                     <StackLayout Margin="15,0,15,0" x:Name="eventStack"></StackLayout>
                     <Label Text="Where do we meet:" Style="{StaticResource CommentLabelStyle}"></Label>

@@ -1,40 +1,105 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="InvMe.View.EventDescriptionPage">
-    <ContentPage.Content> 
-        <ScrollView> 
-        <StackLayout Margin="0,0,0,25">
-                <Label x:Name="eventNameLabel" FontSize="25" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                <Label x:Name="eventTownLabel" FontSize="25" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                <Button x:Name="reportButton" Text="Report event" Clicked="ReportButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             x:Class="InvMe.View.EventDescriptionPage"
+             Title="Event">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="moreToolbarItem" Activated="MoreToolbarItem_Activated" Order="Primary" Icon="more.png" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="0,0,0,25">
+                <StackLayout Margin="15,0,15,0" Orientation="Horizontal">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" NumberOfTapsRequired="1"/>
+                    </StackLayout.GestureRecognizers>
+                    <controls:CircleImage x:Name="ownerProfileImage"
+                                          Aspect="AspectFill" 
+                                          HorizontalOptions="Center" 
+                                          VerticalOptions="Center">
+                        <controls:CircleImage.WidthRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">45</On>
+                            </OnPlatform>
+                        </controls:CircleImage.WidthRequest>
+                        <controls:CircleImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android, iOS">45</On>
+                            </OnPlatform>
+                        </controls:CircleImage.HeightRequest>
+                    </controls:CircleImage>
+                    <StackLayout Orientation="Vertical" Spacing="1">
+                        <Label HorizontalOptions="Start" x:Name="ownerNameLabel" VerticalOptions="Start" FontAttributes="Bold"/>
+                        <Label HorizontalOptions="Start" VerticalOptions="Start" Text="Organizer" TextColor="#70C498" FontAttributes="Bold"/>
+                    </StackLayout>
+                </StackLayout>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0">
+                <Label x:Name="eventNameLabel" FontSize="35" HorizontalOptions="Start" Style="{StaticResource NormalLabelStyle}" FontAttributes="Bold"></Label>
+                <Label x:Name="eventTownLabel" FontSize="25" TextColor="Gray" HorizontalOptions="Start" Style="{StaticResource NormalLabelStyle}"></Label>
+
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
                         <Label x:Name="startDateDay" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                         <Label x:Name="startDateMonth" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                         <Label x:Name="startDateTime" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                     </StackLayout>
-                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1">
+                    <Label Text="-" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" IsVisible="True" x:Name="hyphenLabel"/>
+                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" x:Name="endDateLabel">
                         <Label x:Name="endDateDay" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                         <Label x:Name="endDateMonth" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                         <Label x:Name="endDateTime" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                     </StackLayout>
-                </Grid>
+                </StackLayout>
 
-                <StackLayout Margin="15,0,15,0" x:Name="eventStack"></StackLayout>
-                <Button x:Name="GetDirectionPlaceButton" Text="Get direction to the event place" Clicked="GetDirectionPlaceButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+                <StackLayout Orientation="Horizontal" Spacing="1">
+                    <Label Text="Participants:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                    <Label x:Name="howManyLabel" FontSize="18" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" NumberOfTapsRequired="1"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="15,0,15,0" Spacing="5">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center" BindableLayout.ItemsSource="{Binding AttendedProfilePicUIs}" x:Name="AttendedIconsListStacklayout" Spacing="5">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <controls:CircleImage
+                                          Source="{Binding ProfilePicture}"
+                                          Aspect="AspectFill" 
+                                          HorizontalOptions="Center" 
+                                          VerticalOptions="Center">
+                                    <controls:CircleImage.WidthRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="Android, iOS">45</On>
+                                        </OnPlatform>
+                                    </controls:CircleImage.WidthRequest>
+                                    <controls:CircleImage.HeightRequest>
+                                        <OnPlatform x:TypeArguments="x:Double">
+                                            <On Platform="Android, iOS">45</On>
+                                        </OnPlatform>
+                                    </controls:CircleImage.HeightRequest>
+                                    <controls:CircleImage.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_1" NumberOfTapsRequired="1"/>
+                                    </controls:CircleImage.GestureRecognizers>
+                                </controls:CircleImage>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <Label Text="more..." x:Name="listAttendedMembersFrame" FontSize="14" TextColor="Black" HorizontalOptions="EndAndExpand" VerticalOptions="Center" IsVisible="False">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" NumberOfTapsRequired="1"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+
+                <Label Text="Meeting place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                 <StackLayout Margin="15,0,15,0" x:Name="meetStack"></StackLayout>
                 <Button x:Name="GetDirectionMeetingButton" Text="Get direction to the meeting place" Clicked="GetDirectionMeetingButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
-                
-                <Label x:Name="howManyLabel" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
-                <Button x:Name="attendedListButton" Text="List attended people" Clicked="Handle_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
+                <Label Text="Event place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                <StackLayout Margin="15,0,15,0" x:Name="eventStack"></StackLayout>
+                <Button x:Name="GetDirectionPlaceButton" Text="Get direction to the event place" Clicked="GetDirectionPlaceButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
                 
             </StackLayout>
-            </ScrollView> 
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

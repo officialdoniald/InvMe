@@ -58,13 +58,13 @@
             </Style>
             <Style TargetType="Entry" x:Key="NormalEntryStyle">
                 <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
-                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontSize" Value="{StaticResource NormalFontSize}"/>
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="HeightRequest" Value="50"/> 
                 <Setter Property="Margin" Value="15,0,15,0"/>
             </Style>
             <Style TargetType="Button" x:Key="NormalButtonStyle">
-                <Setter Property="TextColor" Value="{StaticResource NormalFontColor}"/>
+                <Setter Property="TextColor" Value="White"/>
                 <Setter Property="HeightRequest" Value="{StaticResource NormalButtonSize}"/>
                 <Setter Property="BackgroundColor" Value="{StaticResource ButtonBackgroundColor}"/>
                 <Setter Property="BorderColor" Value="{StaticResource NormalFontColor}"/>

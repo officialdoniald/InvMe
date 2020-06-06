@@ -18,15 +18,16 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Text="Hashtag" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" TextColor="Gray" Style="{StaticResource NormalLabelStyle}"/>
-                <Label Text="Town/Online" x:Name="townImage" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" TextColor="Gray" Style="{StaticResource NormalLabelStyle}"/>
+                <Label Text="Hashtag" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                <Label Text="Town" x:Name="townImage" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                 <Entry x:Name="hashtagEntry" Grid.Row="0" Grid.Column="1" Style="{StaticResource NormalEntryStyle}" HorizontalOptions="Fill"></Entry>
-                <Switch x:Name="onlineSwitch" Toggled="onlineSwitch_Toggled" Grid.Row="1" Grid.Column="1"></Switch>
                 <Label Grid.Row="1" Grid.Column="0" Text="Online" VerticalOptions="Center" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                <Switch x:Name="onlineSwitch" Toggled="onlineSwitch_Toggled" Grid.Row="1" Grid.Column="1"></Switch>
                 <Entry IsVisible="True" x:Name="townEntry" Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalEntryStyle}" HorizontalOptions="Fill"></Entry>
                 <Button x:Name="addButton" Text="Search" Clicked="Button_Clicked" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource NormalButtonStyle}"></Button>
             </Grid>
-            <ListView RowHeight="100" ItemTapped="eventListView_ItemTapped" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
+
+            <ListView RowHeight="120" ItemTapped="eventListView_ItemTapped" SeparatorColor="Gray" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
                 <ListView.Header>
                     <StackLayout HorizontalOptions="FillAndExpand">
                         <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>

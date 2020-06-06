@@ -8,7 +8,9 @@
     <ContentPage.Content>
         <ListView RowHeight="80" HorizontalOptions="Center" VerticalOptions="StartAndExpand" Refreshing="userListView_Refreshing" IsPullToRefreshEnabled="True" ItemTapped="userListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding listViewWithPictureAndSomeText}" x:Name="userListView">
             <ListView.Header>
-                <Label x:Name="joinedEventNoItemLabel" Text="No user found..." HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label x:Name="joinedEventNoItemLabel" Text="No user found..." HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                </StackLayout>
             </ListView.Header>
             <ListView.ItemTemplate>
                 <DataTemplate>

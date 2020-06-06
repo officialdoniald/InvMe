@@ -1,14 +1,15 @@
 ﻿using BLL;
-using BLL.Helper;
 using BLL.ViewModel;
-using BLL.Xamarin;
+using ImageCircle.Forms.Plugin.Abstractions;
 using Microsoft.AspNetCore.SignalR.Client;
 using Model;
+using Model.UI;
 using Plugin.ExternalMaps;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
+using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
@@ -20,13 +21,21 @@ namespace InvMe.View
     {
         #region Properties
 
-        ToolbarItem submitordeleteButton = new ToolbarItem();
+        List<Attended> attendedToThisEvent = new List<Attended>();
 
-        Events ThisEvent = new Events();
+        readonly EventDescriptionPageViewModel mvvm = new EventDescriptionPageViewModel();
+
+        public ObservableCollection<AttendedProfilePicUI> AttendedProfilePicUIs = new ObservableCollection<AttendedProfilePicUI>();
+
+        readonly Events ThisEvent = new Events();
 
         Attended attend = new Attended();
 
         bool isAttended = false;
+
+        int howMany = 0;
+
+        User owner = new User();
 
         Pin ppin = new Pin();
 
@@ -70,10 +79,12 @@ namespace InvMe.View
 
                     if (attend)
                     {
+                        howMany++;
                         count++;
                     }
                     else
                     {
+                        howMany--;
                         count--;
                     }
 
@@ -92,33 +103,9 @@ namespace InvMe.View
                         });
                     }
 
-                    if (!isAttended && ThisEvent.HOWMANY <= count)
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            ToolbarItems.Clear();
-                        });
-                    }
-                    else if (isAttended)
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            ToolbarItems.Clear();
-
-                            submitordeleteButton.Clicked += submitordeleteButton_Clicked;
-                            ToolbarItems.Add(submitordeleteButton);
-
-                            if (isAttended) submitordeleteButton.Text = "Leave";
-                            else submitordeleteButton.Text = "Attend";
-                        });
-                    }
+                    InitAttendedUserProfilePicList();
                 }
             });
-
-            //async Task SendMessage(string user, string message)
-            //{
-            //    await hubConnection.InvokeAsync("SendMessage", user, message);
-            //}
         }
 
         private void isAttendedorNot()
@@ -139,7 +126,12 @@ namespace InvMe.View
         {
             ConnectToSignalR();
 
-            List<Attended> attendedToThisEvent = new EventDescriptionPageViewModel().GetAttendedByEventID(ThisEvent.ID);
+            owner = mvvm.GetUserByID(ThisEvent.CREATEUID);
+
+            ownerProfileImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(owner.PROFILEPICTURE));
+            ownerNameLabel.Text = owner.FIRSTNAME + " " + owner.LASTNAME;
+
+            InitAttendedUserProfilePicList();
 
             eventNameLabel.Text = ThisEvent.EVENTNAME;
 
@@ -154,9 +146,8 @@ namespace InvMe.View
 
             if (ThisEvent.FROM == ThisEvent.TO)
             {
-                endDateDay.Text = string.Empty;
-                endDateMonth.Text = "No matter";
-                endDateTime.Text = string.Empty;
+                hyphenLabel.IsVisible = false;
+                endDateLabel.IsVisible = false;
             }
             else
             {
@@ -207,7 +198,7 @@ namespace InvMe.View
                     IsShowingUser = true,
                     HeightRequest = 200
                 };
-                
+
                 meetPlaceMap.Pins.Add(mpin);
 
                 eventStack.Children.Add(eventPlaceMap);
@@ -224,6 +215,8 @@ namespace InvMe.View
                 meetPlaceMap.IsShowingUser = true;
             }
 
+            howMany = attendedToThisEvent.Count;
+
             if (ThisEvent.HOWMANY == 1)
             {
                 howManyLabel.Text = "Anyone" + "/" + attendedToThisEvent.Count;
@@ -232,28 +225,44 @@ namespace InvMe.View
             {
                 howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + attendedToThisEvent.Count;
             }
-            if (ThisEvent.HOWMANY != 1 && attendedToThisEvent.Count >= ThisEvent.HOWMANY)
+        }
+
+        private void InitAttendedUserProfilePicList()
+        {
+            attendedToThisEvent = mvvm.GetAttendedByEventID(ThisEvent.ID);
+
+            AttendedProfilePicUIs = new ObservableCollection<AttendedProfilePicUI>();
+
+            if (attendedToThisEvent.Count > 5)
             {
-                ToolbarItems.Clear();
+                listAttendedMembersFrame.IsVisible = true;
             }
             else
             {
-                submitordeleteButton.Clicked += submitordeleteButton_Clicked;
-                ToolbarItems.Add(submitordeleteButton);
-
-                if (isAttended) submitordeleteButton.Text = "Leave";
-                else submitordeleteButton.Text = "Attend";
+                listAttendedMembersFrame.IsVisible = false;
             }
+
+            foreach (var item in attendedToThisEvent.Take(5))
+            {
+                var user = mvvm.GetUserByID(item.USERID);
+
+                AttendedProfilePicUIs.Add(new AttendedProfilePicUI()
+                {
+                    User = user,
+                    ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(user.PROFILEPICTURE))
+                });
+            }
+
+            BindableLayout.SetItemsSource(AttendedIconsListStacklayout, AttendedProfilePicUIs);
         }
 
-        private async void submitordeleteButton_Clicked(object sender, EventArgs e)
+        private async void SubmitOrDelete()
         {
-            bool success = false;
-
             attend = new Attended();
             attend.USERID = GlobalVariables.ActualUser.ID;
             attend.EVENTID = ThisEvent.ID;
 
+            bool success;
             if (isAttended)
             {
                 success = new EventDescriptionPageViewModel().DeleteAttended(attend);
@@ -292,8 +301,7 @@ namespace InvMe.View
                 ppin.Label,
                 ppin.Position.Latitude,
                 ppin.Position.Longitude,
-                Plugin.ExternalMaps.Abstractions.NavigationType.Driving
-                );
+                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
         }
 
         private void GetDirectionMeetingButton_Clicked(object sender, EventArgs e)
@@ -302,16 +310,33 @@ namespace InvMe.View
                 mpin.Label,
                 mpin.Position.Latitude,
                 mpin.Position.Longitude,
-                Plugin.ExternalMaps.Abstractions.NavigationType.Driving
-                );
+                Plugin.ExternalMaps.Abstractions.NavigationType.Driving);
         }
 
-        void Handle_Clicked(object sender, System.EventArgs e)
+        private async void MoreToolbarItem_Activated(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AttendedUsersListPage(ThisEvent));
+            string[] moreMenuItem = new string[] { ThisEvent.HOWMANY != 1 && howMany >= ThisEvent.HOWMANY ? "" : isAttended ? "Leave" : "Attend", "Report event" };
+
+            var reported = await DisplayActionSheet("More", "Cancel", null, moreMenuItem);
+
+            if (reported == "Report event")
+            {
+                Report();
+            }
+            else if (reported == "Leave" || reported == "Attend")
+            {
+                if (ThisEvent.CREATEUID == GlobalVariables.ActualUser.ID)
+                {
+                    await DisplayAlert(GlobalVariables.Language.Warning(), "You can't leave your event!", GlobalVariables.Language.OK());
+                }
+                else
+                {
+                    SubmitOrDelete();
+                }
+            }
         }
 
-        private async void ReportButton_Clicked(object sender, EventArgs e)
+        private async void Report()
         {
             var success = new EventDescriptionPageViewModel().ReportEvent(ThisEvent);
 
@@ -324,6 +349,21 @@ namespace InvMe.View
             {
                 await DisplayAlert("Failed", "Something went wrong", "OK");
             }
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new UserDescriptionPage(owner));
+        }
+
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new UserDescriptionPage(((AttendedProfilePicUI)((CircleImage)sender).BindingContext).User));
+        }
+
+        private void TapGestureRecognizer_Tapped_2(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AttendedUsersListPage(ThisEvent));
         }
     }
 }

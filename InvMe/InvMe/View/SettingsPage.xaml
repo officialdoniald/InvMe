@@ -4,9 +4,9 @@
              x:Class="InvMe.View.SettingsPage"
              Title="Settings">
     <ContentPage.Content>
-        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-            <Label Text="Get automatic your location" Style="{StaticResource NormalLabelStyle}"/>
-            <Switch x:Name="OnAutomaticUserLocation" Toggled="OnAutomaticUserLocation_Toggled" HorizontalOptions="EndAndExpand"/>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+            <Label Text="Get automatic your location" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+            <Switch x:Name="OnAutomaticUserLocation" VerticalOptions="Center" Toggled="OnAutomaticUserLocation_Toggled" HorizontalOptions="EndAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -29,7 +29,7 @@ namespace InvMe.View
             if (!string.IsNullOrEmpty(hashtag.HASHTAG)) {
                 Title = "#" + hashtag.HASHTAG;
             }else {
-                Title = "InvMe!"; 
+                Title = "Events"; 
             }          
 
             GetTheEvents();
