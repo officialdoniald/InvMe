@@ -28,7 +28,9 @@
             </Grid>
             <ListView RowHeight="100" ItemTapped="eventListView_ItemTapped" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
                 <ListView.Header>
-                    <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                    </StackLayout>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>

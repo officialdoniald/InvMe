@@ -40,7 +40,9 @@
             <BoxView HeightRequest="1" BackgroundColor="Black" HorizontalOptions="FillAndExpand" Margin="15,0,15,0"/>
             <ListView BackgroundColor="Transparent" ItemsSource="{Binding Bindablehashtags}" IsPullToRefreshEnabled="True" Refreshing="HashtagsListView_Refreshing" x:Name="hashtagsListView" ItemTapped="HashtagsListView_ItemTapped">
                 <ListView.Header>
-                    <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                    </StackLayout>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
