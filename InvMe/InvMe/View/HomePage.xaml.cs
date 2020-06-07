@@ -3,6 +3,7 @@ using BLL.ViewModel;
 using Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -121,6 +122,17 @@ namespace InvMe.View
 
                     foreach (var item in eventList)
                     {
+                        var attendedList = GlobalVariables.DatabaseConnection.GetAttendedByEventID(item.ID).Take(3);
+
+                        List<ImageSource> attendedPictures = new List<ImageSource>();
+
+                        foreach (var attend in attendedList)
+                        {
+                            var source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.DatabaseConnection.GetUserByID(attend.USERID).PROFILEPICTURE));
+
+                            attendedPictures.Add(source);
+                        }
+
                         BindableEvent bindableEvent = new BindableEvent();
 
                         bindableEvent.Event = item;
@@ -135,6 +147,8 @@ namespace InvMe.View
                         bindableEvent.DAY = dto_begin.ToString("dd");
                         bindableEvent.MONTH = dto_begin.ToString("MMM");
                         bindableEvent.TIME = dto_begin.ToString("h:mm tt");
+                        bindableEvent.AttendedPictures = attendedPictures;
+                        bindableEvent.IsMoreThenThreeAttended = attendedList.Count() > 3 ? true : false;
 
                         if (item.ONLINE == 1) bindableEvent.TOWN = "Online";
                         else bindableEvent.TOWN = item.TOWN + ", " + item.PLACE;

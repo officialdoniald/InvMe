@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace BLL.ViewModel
 {
@@ -41,6 +42,17 @@ namespace BLL.ViewModel
 
                 if ((dts >= item.FROM && dts < item.TO) || (dts < item.TO || (item.FROM == item.TO && dts < item.FROM)) || (dts <= item.FROM && dts > item.TO))
                 {
+                    var attendedList = GlobalVariables.DatabaseConnection.GetAttendedByEventID(item.ID).Take(3);
+
+                    List<ImageSource> attendedPictures = new List<ImageSource>();
+
+                    foreach (var attend in attendedList)
+                    {
+                        var source = ImageSource.FromStream(() => new System.IO.MemoryStream(GlobalVariables.DatabaseConnection.GetUserByID(attend.USERID).PROFILEPICTURE));
+
+                        attendedPictures.Add(source);
+                    }
+
                     BindableEvent bindableEvent = new BindableEvent()
                     {
                         Event = item,
@@ -48,7 +60,9 @@ namespace BLL.ViewModel
                         FROM = item.FROM.ToString(GlobalVariables.DateFormatForEventsList),
                         DAY = item.FROM.ToString("dd"),
                         MONTH = item.FROM.ToString("MMM"),
-                        TIME = item.FROM.ToString("h:mm tt")
+                        TIME = item.FROM.ToString("h:mm tt"),
+                        AttendedPictures = attendedPictures,
+                        IsMoreThenThreeAttended = attendedList.Count() > 3 ? true : false
                     };
                     
                     if (item.ONLINE == 1) bindableEvent.TOWN = "Online";

@@ -2,11 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="InvMe.View.JoinedEventPage"
-             xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin"
+             xmlns:customControls="clr-namespace:BLL.Xamarin.CustomRenderers;assembly=BLL.Xamarin" xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
              Title="Joined events">
     <ContentPage.Content>
         <StackLayout>
-            <ListView RowHeight="120" SeparatorColor="Gray" ItemTapped="eventListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
+            <ListView HasUnevenRows="True" SeparatorColor="Transparent" ItemTapped="eventListView_ItemTapped" BackgroundColor="Transparent" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
                 <ListView.Header>
                     <StackLayout HorizontalOptions="FillAndExpand">
                         <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
@@ -14,25 +14,58 @@
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                      <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
-                             <Grid BackgroundColor="White">
+                        <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
+                            <Frame Padding="0" CornerRadius="10" BackgroundColor="White" Margin="5,10,5,10">
+                                <Grid BackgroundColor="White">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
-                                        <RowDefinition></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
-                                    <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
-                                        <Label Text="{Binding MONTH}" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                                        <Label Text="{Binding DAY}" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    <Frame Margin="8,15,8,15" Padding="0" CornerRadius="10" Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
+                                        <StackLayout Margin="00" Orientation="Vertical" Spacing="0">
+                                            <StackLayout Margin="0" BackgroundColor="#E8574F" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                                <Label Margin="20,2,20,2" Text="{Binding MONTH}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                            </StackLayout>
+                                            <StackLayout Margin="0" BackgroundColor="#FAFAFA" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="0">
+                                                <Label Margin="20,2,20,2" Text="{Binding DAY}" TextColor="#585858" FontSize="35" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                                <Label Margin="20,2,20,2" Text="{Binding TIME}" TextColor="#E8574F" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </Frame>
+                                    <StackLayout Margin="0" Orientation="Vertical" Spacing="8" VerticalOptions="Center" HorizontalOptions="Center" Grid.Column="1" Grid.Row="0">
+                                        <Label Margin="0" Text="{Binding EVENTNAME}" TextColor="Black" FontSize="23" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                        <Label Margin="0" Text="{Binding TOWN}" TextColor="Gray" FontSize="17" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                        <StackLayout Orientation="Horizontal" Margin="0" Spacing="5">
+                                            <StackLayout Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Center" BindableLayout.ItemsSource="{Binding AttendedPictures}" Spacing="5">
+                                                <BindableLayout.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <controls:CircleImage
+                                                      Source="{Binding .}"
+                                                      Aspect="AspectFill" 
+                                                      HorizontalOptions="Center" 
+                                                      VerticalOptions="Center">
+                                                            <controls:CircleImage.WidthRequest>
+                                                                <OnPlatform x:TypeArguments="x:Double">
+                                                                    <On Platform="Android, iOS">45</On>
+                                                                </OnPlatform>
+                                                            </controls:CircleImage.WidthRequest>
+                                                            <controls:CircleImage.HeightRequest>
+                                                                <OnPlatform x:TypeArguments="x:Double">
+                                                                    <On Platform="Android, iOS">45</On>
+                                                                </OnPlatform>
+                                                            </controls:CircleImage.HeightRequest>
+                                                        </controls:CircleImage>
+                                                    </DataTemplate>
+                                                </BindableLayout.ItemTemplate>
+                                            </StackLayout>
+                                            <Label Margin="0" Text="more..." FontSize="14" TextColor="Black" HorizontalOptions="EndAndExpand" VerticalOptions="End" IsVisible="{Binding IsMoreThenThreeAttended}"/>
+                                        </StackLayout>
                                     </StackLayout>
-                                    <Label Text="{Binding TIME}" Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                                    <Label Text="{Binding EVENTNAME}" TextColor="Gray" FontSize="Large" Grid.Row="1" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="End" Style="{StaticResource NormalLabelStyle}"/>
-                                    <Label Text="{Binding TOWN}" TextColor="Gray" FontSize="Large" Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Start" Style="{StaticResource NormalLabelStyle}"/>
                                 </Grid>
+                            </Frame>
                         </customControls:ExtendedViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

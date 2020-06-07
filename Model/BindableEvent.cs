@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace Model
 {
@@ -21,5 +22,9 @@ namespace Model
         public string TOWN { get; set; }
 
         public Events Event { get; set; }
+
+        public List<ImageSource> AttendedPictures { get; set; } = new List<ImageSource>();
+
+        public bool IsMoreThenThreeAttended { get; set; }
     }
 }
