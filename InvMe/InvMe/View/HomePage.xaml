@@ -37,7 +37,7 @@
                     <DataTemplate>
                         <customControls:ExtendedViewCell SelectedBackgroundColor="Transparent">
                             <Frame Padding="0" CornerRadius="10" BackgroundColor="White" Margin="5,10,5,10">
-                                <Grid BackgroundColor="White">
+                                <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"></RowDefinition>
                                     </Grid.RowDefinitions>

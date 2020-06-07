@@ -21,6 +21,7 @@
             </Style>
             <Style TargetType="ListView" ApplyToDerivedTypes="true">
                 <Setter Property="SeparatorColor" Value="Transparent"/>
+                <Setter Property="BackgroundColor" Value="#E5E5E5"/>
             </Style>
             <Style TargetType="ActivityIndicator" ApplyToDerivedTypes="true">
                 <Setter Property="HorizontalOptions" Value="Center"></Setter>
@@ -63,6 +64,13 @@
                 <Setter Property="HeightRequest" Value="{StaticResource NormalButtonSize}"/> 
                 <Setter Property="Margin" Value="15,0,15,0"/>
             </Style>
+            <Style TargetType="Frame" ApplyToDerivedTypes="True">
+                <Setter Property="HasShadow" Value="False"/>
+            </Style>
+            <Style TargetType="Page" ApplyToDerivedTypes="True">
+                <Setter Property="BackgroundColor" Value="White"/>
+            </Style>
+            <!--#E5E5E5-->
             <Style TargetType="Button" x:Key="NormalButtonStyle">
                 <Setter Property="TextColor" Value="White"/>
                 <Setter Property="HeightRequest" Value="{StaticResource NormalButtonSize}"/>
