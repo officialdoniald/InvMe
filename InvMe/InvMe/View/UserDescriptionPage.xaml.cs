@@ -85,12 +85,12 @@ namespace InvMe.View
 
             if (success)
             {
-                await DisplayAlert("Success", "Thanks..", "OK");
+                await DisplayAlert("Success", "Thank you very much for the report, we are investigating the user.", "OK");
                 await Navigation.PopToRootAsync();
             }
             else
             {
-                await DisplayAlert("Failed", "Something went wrong", "OK");
+                await DisplayAlert("Failed", "Something went wrong, please check back later!", "OK");
             }
         }
 

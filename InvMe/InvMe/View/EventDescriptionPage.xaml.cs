@@ -8,8 +8,8 @@ using Plugin.ExternalMaps;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Design;
 using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
@@ -49,7 +49,7 @@ namespace InvMe.View
 
             ThisEvent = events;
 
-            isAttendedorNot();
+            IsAttendedorNot();
 
             SeeTheEvent();
         }
@@ -108,7 +108,7 @@ namespace InvMe.View
             });
         }
 
-        private void isAttendedorNot()
+        private async Task IsAttendedorNot()
         {
             if (new EventDescriptionPageViewModel().GetAttended(ThisEvent.ID))
             {
@@ -122,138 +122,162 @@ namespace InvMe.View
             }
         }
 
-        private void SeeTheEvent()
+        private async Task SeeTheEvent()
         {
             ConnectToSignalR();
 
-            owner = mvvm.GetUserByID(ThisEvent.CREATEUID);
-
-            ownerProfileImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(owner.PROFILEPICTURE));
-            ownerNameLabel.Text = owner.FIRSTNAME + " " + owner.LASTNAME;
-
-            InitAttendedUserProfilePicList();
-
-            eventNameLabel.Text = ThisEvent.EVENTNAME;
-
-            DateTimeOffset dto_begin = new DateTimeOffset();
-            DateTimeOffset dto_end = new DateTimeOffset();
-            dto_begin = ThisEvent.FROM.ToLocalTime();
-            dto_end = ThisEvent.TO.ToLocalTime();
-
-            startDateDay.Text = dto_begin.ToString("MMM");
-            startDateMonth.Text = dto_begin.ToString("dd");
-            startDateTime.Text = dto_begin.ToString("h:mm tt");
-
-            if (ThisEvent.FROM == ThisEvent.TO)
+            await Task.Run(async () =>
             {
-                hyphenLabel.IsVisible = false;
-                endDateLabel.IsVisible = false;
-            }
-            else
-            {
-                endDateDay.Text = dto_end.ToString("MMM");
-                endDateMonth.Text = dto_end.ToString("dd");
-                endDateTime.Text = dto_end.ToString("h:mm tt");
-            }
+                owner = mvvm.GetUserByID(ThisEvent.CREATEUID);
 
-            if (ThisEvent.ONLINE == 1)
-            {
-                eventTownLabel.Text = "Online";
-
-                eventStack.IsVisible = false;
-                meetStack.IsVisible = false;
-                GetDirectionMeetingButton.IsVisible = false;
-                GetDirectionPlaceButton.IsVisible = false;
-            }
-            else
-            {
-                eventTownLabel.Text = ThisEvent.TOWN + ", " + ThisEvent.PLACE;
-
-                Position ppos = new Position(Convert.ToDouble(ThisEvent.PLACECORD.Split(';')[0]),
-                    Convert.ToDouble(ThisEvent.PLACECORD.Split(';')[1]));
-                Position mpos = new Position(Convert.ToDouble(ThisEvent.MEETINGCORD.Split(';')[0]),
-                    Convert.ToDouble(ThisEvent.MEETINGCORD.Split(';')[1]));
-
-                ppin = new Pin();
-                mpin = new Pin();
-
-                ppin.Position = ppos;
-                ppin.Label = ThisEvent.EVENTNAME + ", " + ThisEvent.PLACE;
-                ppin.Type = PinType.Place;
-                ppin.Address = "";
-                mpin.Position = mpos;
-                mpin.Label = "Meeting place";
-                mpin.Type = PinType.Place;
-                mpin.Address = "";
-
-                Map eventPlaceMap = new Map()
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    IsShowingUser = true,
-                    HeightRequest = 200
-                };
-                eventPlaceMap.Pins.Add(ppin);
+                    ownerProfileImage.Source = ImageSource.FromStream(() => new System.IO.MemoryStream(owner.PROFILEPICTURE));
+                    ownerNameLabel.Text = owner.FIRSTNAME + " " + owner.LASTNAME;
+                });
 
-                Map meetPlaceMap = new Map()
+                await InitAttendedUserProfilePicList();
+
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    IsShowingUser = true,
-                    HeightRequest = 200
-                };
+                    eventNameLabel.Text = ThisEvent.EVENTNAME;
+                });
 
-                meetPlaceMap.Pins.Add(mpin);
+                DateTimeOffset dto_begin = new DateTimeOffset();
+                DateTimeOffset dto_end = new DateTimeOffset();
+                dto_begin = ThisEvent.FROM.ToLocalTime();
+                dto_end = ThisEvent.TO.ToLocalTime();
 
-                eventStack.Children.Add(eventPlaceMap);
-                meetStack.Children.Add(meetPlaceMap);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    startDateDay.Text = dto_begin.ToString("MMM");
+                    startDateMonth.Text = dto_begin.ToString("dd");
+                    startDateTime.Text = dto_begin.ToString("h:mm tt");
 
-                eventPlaceMap.MoveToRegion(
-                    MapSpan.FromCenterAndRadius(
-                    ppos, Distance.FromMiles(1.0)));
-                eventPlaceMap.IsShowingUser = true;
+                    if (ThisEvent.FROM == ThisEvent.TO)
+                    {
+                        hyphenLabel.IsVisible = false;
+                        endDateLabel.IsVisible = false;
+                    }
+                    else
+                    {
+                        endDateDay.Text = dto_end.ToString("MMM");
+                        endDateMonth.Text = dto_end.ToString("dd");
+                        endDateTime.Text = dto_end.ToString("h:mm tt");
+                    }
 
-                meetPlaceMap.MoveToRegion(
-                    MapSpan.FromCenterAndRadius(
-                        mpos, Distance.FromMiles(1.0)));
-                meetPlaceMap.IsShowingUser = true;
-            }
+                    if (ThisEvent.ONLINE == 1)
+                    {
+                        eventTownLabel.Text = "Online";
 
-            howMany = attendedToThisEvent.Count;
+                        eventStack.IsVisible = false;
+                        meetStack.IsVisible = false;
+                        GetDirectionMeetingButton.IsVisible = false;
+                        GetDirectionPlaceButton.IsVisible = false;
+                    }
+                    else
+                    {
+                        eventTownLabel.Text = ThisEvent.TOWN + ", " + ThisEvent.PLACE;
 
-            if (ThisEvent.HOWMANY == 1)
-            {
-                howManyLabel.Text = "Anyone" + "/" + attendedToThisEvent.Count;
-            }
-            else
-            {
-                howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + attendedToThisEvent.Count;
-            }
+                        Position ppos = new Position(Convert.ToDouble(ThisEvent.PLACECORD.Split(';')[0]),
+                            Convert.ToDouble(ThisEvent.PLACECORD.Split(';')[1]));
+                        Position mpos = new Position(Convert.ToDouble(ThisEvent.MEETINGCORD.Split(';')[0]),
+                            Convert.ToDouble(ThisEvent.MEETINGCORD.Split(';')[1]));
+
+                        ppin = new Pin();
+                        mpin = new Pin();
+
+                        ppin.Position = ppos;
+                        ppin.Label = ThisEvent.EVENTNAME + ", " + ThisEvent.PLACE;
+                        ppin.Type = PinType.Place;
+                        ppin.Address = "";
+                        mpin.Position = mpos;
+                        mpin.Label = "Meeting place";
+                        mpin.Type = PinType.Place;
+                        mpin.Address = "";
+
+                        Map eventPlaceMap = new Map()
+                        {
+                            IsShowingUser = true,
+                            HeightRequest = 200
+                        };
+                        eventPlaceMap.Pins.Add(ppin);
+
+                        Map meetPlaceMap = new Map()
+                        {
+                            IsShowingUser = true,
+                            HeightRequest = 200
+                        };
+
+                        meetPlaceMap.Pins.Add(mpin);
+
+                        eventStack.Children.Add(eventPlaceMap);
+                        meetStack.Children.Add(meetPlaceMap);
+
+                        eventPlaceMap.MoveToRegion(
+                            MapSpan.FromCenterAndRadius(
+                            ppos, Distance.FromMiles(1.0)));
+                        eventPlaceMap.IsShowingUser = true;
+
+                        meetPlaceMap.MoveToRegion(
+                            MapSpan.FromCenterAndRadius(
+                                mpos, Distance.FromMiles(1.0)));
+                        meetPlaceMap.IsShowingUser = true;
+                    }
+
+                    howMany = attendedToThisEvent.Count;
+
+                    if (ThisEvent.HOWMANY == 1)
+                    {
+                        howManyLabel.Text = "Anyone" + "/" + attendedToThisEvent.Count;
+                    }
+                    else
+                    {
+                        howManyLabel.Text = ThisEvent.HOWMANY.ToString() + "/" + attendedToThisEvent.Count;
+                    }
+                });
+            });
         }
 
-        private void InitAttendedUserProfilePicList()
+        private async Task InitAttendedUserProfilePicList()
         {
-            attendedToThisEvent = mvvm.GetAttendedByEventID(ThisEvent.ID);
-
-            AttendedProfilePicUIs = new ObservableCollection<AttendedProfilePicUI>();
-
-            if (attendedToThisEvent.Count > 5)
+            await Task.Run(() =>
             {
-                listAttendedMembersFrame.IsVisible = true;
-            }
-            else
-            {
-                listAttendedMembersFrame.IsVisible = false;
-            }
+                attendedToThisEvent = mvvm.GetAttendedByEventID(ThisEvent.ID);
 
-            foreach (var item in attendedToThisEvent.Take(5))
-            {
-                var user = mvvm.GetUserByID(item.USERID);
-
-                AttendedProfilePicUIs.Add(new AttendedProfilePicUI()
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    User = user,
-                    ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(user.PROFILEPICTURE))
-                });
-            }
+                    AttendedProfilePicUIs = new ObservableCollection<AttendedProfilePicUI>();
 
-            BindableLayout.SetItemsSource(AttendedIconsListStacklayout, AttendedProfilePicUIs);
+                    if (attendedToThisEvent.Count > 5)
+                    {
+                        listAttendedMembersFrame.IsVisible = true;
+                    }
+                    else
+                    {
+                        listAttendedMembersFrame.IsVisible = false;
+                    }
+                });
+
+                foreach (var item in attendedToThisEvent.Take(5))
+                {
+                    var user = mvvm.GetUserByID(item.USERID);
+
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        AttendedProfilePicUIs.Add(new AttendedProfilePicUI()
+                        {
+                            User = user,
+                            ProfilePicture = ImageSource.FromStream(() => new System.IO.MemoryStream(user.PROFILEPICTURE))
+                        });
+                    });
+                }
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    BindableLayout.SetItemsSource(AttendedIconsListStacklayout, AttendedProfilePicUIs);
+                });
+            });
         }
 
         private async void SubmitOrDelete()
@@ -342,12 +366,12 @@ namespace InvMe.View
 
             if (success)
             {
-                await DisplayAlert("Success", "Thanks..", "OK");
+                await DisplayAlert("Success", "Thank you very much for the report, we are investigating the event.", "OK");
                 await Navigation.PopToRootAsync();
             }
             else
             {
-                await DisplayAlert("Failed", "Something went wrong", "OK");
+                await DisplayAlert("Failed", "Something went wrong, please check back later!", "OK");
             }
         }
 
