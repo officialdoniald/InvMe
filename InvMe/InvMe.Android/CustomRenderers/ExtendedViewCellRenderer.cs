@@ -12,11 +12,6 @@ namespace InvMe.Droid.CustomRenderers
 {
     public class ExtendedViewCellRenderer : ViewCellRenderer
     {
-
-        private Android.Views.View _cellCore;
-        private Drawable _unselectedBackground;
-        private bool _selected;
-
         protected override Android.Views.View GetCellCore(Cell item, Android.Views.View convertView, ViewGroup parent, Context context)
         {
             var _cellCore = base.GetCellCore(item, convertView, parent, context);
