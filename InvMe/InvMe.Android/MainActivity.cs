@@ -28,7 +28,7 @@ namespace InvMe.Droid
             ImageCircleRenderer.Init();
 
             ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.AccessFineLocation }, 1);
-
+            AndroidEvents.OnAndroidThemeChangeNeeded += MyEvents_OnReceived;
             LoadApplication(new App());
         }
 
@@ -40,5 +40,23 @@ namespace InvMe.Droid
         }
 
         public override void OnBackPressed() { }
+
+        private void MyEvents_OnReceived(object sender, int id)
+        {
+            RunOnUiThread(() =>
+            {
+                SetTheme(id);
+            });
+        }
+
+        public class AndroidEvents
+        {
+            public static event EventHandler<int> OnAndroidThemeChangeNeeded;
+
+            public static void OnAndroidThemeChangeNeeded_Event(object sender, int id)
+            {
+                OnAndroidThemeChangeNeeded?.Invoke(sender, id);
+            }
+        }
     }
 }

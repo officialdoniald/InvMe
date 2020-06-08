@@ -60,30 +60,8 @@ namespace InvMe.View
         private void DidableEnableButton(bool state)
         {
             addHashtagActivator.IsRunning = !state;
+            addHashtagActivator.IsVisible = !state;
             addButton.IsEnabled = state;
-        }
-
-        public async void OnDelete(object sender, EventArgs e)
-        {
-            DidableEnableButton(false);
-
-            var mi = ((MenuItem)sender);
-            var listItem = (Hashtags)mi.CommandParameter;
-
-            string success = new HashtagsPageViewModel().DeleteHashtag(listItem);
-            
-            if (string.IsNullOrEmpty(success))
-            {
-                await DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.Success(), GlobalVariables.Language.OK());
-
-                HashtagsListView_Refreshing(null, new EventArgs());
-            }
-            else
-            {
-                await DisplayAlert(GlobalVariables.Language.Warning(), success, GlobalVariables.Language.OK());
-            }
-
-            DidableEnableButton(true);
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -130,7 +108,8 @@ namespace InvMe.View
 
                 if (string.IsNullOrEmpty(success))
                 {
-                    await DisplayAlert(GlobalVariables.Language.Success(), GlobalVariables.Language.Success(), GlobalVariables.Language.OK());
+                    townEntry.Text = string.Empty;
+                    hashtagEntry.Text = string.Empty;
 
                     HashtagsListView_Refreshing(null, new EventArgs());
                 }
@@ -157,6 +136,24 @@ namespace InvMe.View
             var listItem = (Hashtags)hashtagsListView.SelectedItem;
 
             Navigation.PushAsync(new HomePage(listItem));
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            DidableEnableButton(false);
+            
+            string success = new HashtagsPageViewModel().DeleteHashtag((Hashtags)((Image)sender).BindingContext);
+
+            if (string.IsNullOrEmpty(success))
+            {
+                HashtagsListView_Refreshing(null, new EventArgs());
+            }
+            else
+            {
+                await DisplayAlert(GlobalVariables.Language.Warning(), success, GlobalVariables.Language.OK());
+            }
+
+            DidableEnableButton(true);
         }
     }
 }

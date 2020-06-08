@@ -23,7 +23,14 @@
 
     <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
   </style>
-
+  
+ <style name="MainTransparentTheme.Base" parent="MainTheme">
+    <item name="android:colorPressedHighlight">@color/transparentlistviewSelection</item>
+    <item name="android:colorLongPressedHighlight">@color/transparentlistviewSelection</item>
+    <item name="android:colorFocusedHighlight">@color/transparentlistviewSelection</item>
+    <item name="android:colorActivatedHighlight">@color/transparentlistviewSelection</item>
+    <item name="android:activatedBackgroundIndicator">@color/transparentlistviewSelection</item>
+  </style>
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#000000</item>
   </style>

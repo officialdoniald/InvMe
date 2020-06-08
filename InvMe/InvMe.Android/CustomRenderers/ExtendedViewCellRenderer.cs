@@ -17,15 +17,13 @@ namespace InvMe.Droid.CustomRenderers
         private Drawable _unselectedBackground;
         private bool _selected;
 
-        protected override Android.Views.View GetCellCore(Cell item,
-                                                          Android.Views.View convertView,
-                                                          ViewGroup parent,
-                                                          Context context)
+        protected override Android.Views.View GetCellCore(Cell item, Android.Views.View convertView, ViewGroup parent, Context context)
         {
-            _cellCore = base.GetCellCore(item, convertView, parent, context);
+            var _cellCore = base.GetCellCore(item, convertView, parent, context);
 
-            _selected = false;
-            _unselectedBackground = _cellCore.Background;
+            var extendedViewCell = (ExtendedViewCell)item;
+
+            MainActivity.AndroidEvents.OnAndroidThemeChangeNeeded_Event(null, Resource.Style.MainTransparentTheme_Base);
 
             return _cellCore;
         }
@@ -34,20 +32,9 @@ namespace InvMe.Droid.CustomRenderers
         {
             base.OnCellPropertyChanged(sender, args);
 
-            if (args.PropertyName == "IsSelected")
-            {
-                _selected = !_selected;
+            var extendedViewCell = (ExtendedViewCell)sender;
 
-                if (_selected)
-                {
-                    var extendedViewCell = sender as ExtendedViewCell;
-                    _cellCore.SetBackgroundColor(extendedViewCell.SelectedBackgroundColor.ToAndroid());
-                }
-                else
-                {
-                    _cellCore.SetBackground(_unselectedBackground);
-                }
-            }
+            MainActivity.AndroidEvents.OnAndroidThemeChangeNeeded_Event(null, Resource.Style.MainTransparentTheme_Base);
         }
     }
 }

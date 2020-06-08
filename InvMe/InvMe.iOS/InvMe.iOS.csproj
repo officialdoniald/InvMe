@@ -372,6 +372,9 @@
   <ItemGroup>
     <BundleResource Include="Resources\Icon-1024.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\remove.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
       <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarInvMeiOSHideInfoBar="True" />

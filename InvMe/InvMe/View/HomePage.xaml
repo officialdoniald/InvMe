@@ -26,7 +26,6 @@
                 <Entry IsVisible="True" x:Name="townEntry" Grid.Row="2" Grid.Column="1" Style="{StaticResource NormalEntryStyle}" HorizontalOptions="Fill"></Entry>
                 <Button x:Name="addButton" Text="Search" Clicked="Button_Clicked" Grid.Row="3" Grid.ColumnSpan="2" Style="{StaticResource NormalButtonStyle}"></Button>
             </Grid>
-
             <ListView HasUnevenRows="True" ItemTapped="eventListView_ItemTapped" SeparatorColor="Transparent" ItemsSource="{Binding bindableEventList}" x:Name="eventListView" IsPullToRefreshEnabled="True" Refreshing="EventListView_Refreshing">
                 <ListView.Header>
                     <StackLayout HorizontalOptions="FillAndExpand">
