@@ -36,6 +36,9 @@
                     <Label Grid.Column="0" Text="Online event:" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
                 </StackLayout>
+                <StackLayout>
+                    <Editor x:Name="descriptionEditor" Placeholder="Description" Style="{StaticResource NormalEditorStyle}"></Editor>
+                </StackLayout>
                 <StackLayout x:Name="mapStackLayout">
                     <Entry x:Name="eventTownEntry" Placeholder="Town" Style="{StaticResource NormalEntryStyle}"></Entry>
                     <Entry x:Name="eventPlaceEntry" Placeholder="Place" Style="{StaticResource NormalEntryStyle}"></Entry>

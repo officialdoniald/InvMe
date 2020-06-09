@@ -323,7 +323,7 @@ namespace InvMe.View
                 Events eventCreateObject = new Events();
 
                 eventCreateObject.FROM = (whenbegindatePicker.Date + beginclock.Time).ToUniversalTime();
-
+                eventCreateObject.DESCRIPTION = descriptionEditor.Text;
                 eventCreateObject.EVENTNAME = eventNameEntry.Text;
 
                 if (noMatterHowLong)

@@ -120,6 +120,8 @@ namespace InvMe.View
                         }
                     }
 
+                    eventList = eventList.OrderByDescending(d => d.FROM).ToList();
+
                     foreach (var item in eventList)
                     {
                         var attendedList = GlobalVariables.DatabaseConnection.GetAttendedByEventID(item.ID).Take(3);

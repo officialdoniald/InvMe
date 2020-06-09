@@ -61,7 +61,6 @@ namespace BLL.ViewModel
                 }
 
                 events.MDESCRIPTION = "";
-                events.DESCRIPTION = "";
                 events.CREATEUID = GlobalVariables.ActualUser.ID;
 
                 int success = GlobalVariables.DatabaseConnection.InsertEventAsync(events);

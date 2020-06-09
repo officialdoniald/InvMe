@@ -41,7 +41,7 @@
                                         <RowDefinition Height="Auto"></RowDefinition>
                                     </Grid.RowDefinitions>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="125"></ColumnDefinition>
                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
                                     <Frame Margin="8,15,8,15" Padding="0" CornerRadius="10" Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
@@ -69,12 +69,12 @@
                                                       VerticalOptions="Center">
                                                             <controls:CircleImage.WidthRequest>
                                                                 <OnPlatform x:TypeArguments="x:Double">
-                                                                    <On Platform="Android, iOS">45</On>
+                                                                    <On Platform="Android, iOS">35</On>
                                                                 </OnPlatform>
                                                             </controls:CircleImage.WidthRequest>
                                                             <controls:CircleImage.HeightRequest>
                                                                 <OnPlatform x:TypeArguments="x:Double">
-                                                                    <On Platform="Android, iOS">45</On>
+                                                                    <On Platform="Android, iOS">35</On>
                                                                 </OnPlatform>
                                                             </controls:CircleImage.HeightRequest>
                                                         </controls:CircleImage>

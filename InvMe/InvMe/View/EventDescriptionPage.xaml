@@ -40,18 +40,55 @@
 
                 <StackLayout Orientation="Horizontal">
                     <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand">
-                        <Label x:Name="startDateDay" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                        <Label x:Name="startDateMonth" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                        <Label x:Name="startDateTime" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Frame Margin="8,15,8,15" Padding="0" CornerRadius="10" Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
+                                <StackLayout Margin="00" Orientation="Vertical" Spacing="0">
+                                    <StackLayout Margin="0" BackgroundColor="#E8574F" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                        <Label Margin="20,2,20,2" x:Name="startDateDay" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Margin="0" BackgroundColor="#FAFAFA" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="0">
+                                        <Label Margin="20,2,20,2" x:Name="startDateMonth"  TextColor="#585858" FontSize="35" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                        <Label Margin="20,2,20,2" x:Name="startDateTime" TextColor="#E8574F" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
                     </StackLayout>
-                    <Label Text="-" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" IsVisible="True" x:Name="hyphenLabel"/>
+                    <Label Text="-" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" IsVisible="True" x:Name="hyphenLabel" FontSize="30"/>
                     <StackLayout Orientation="Vertical" Spacing="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" x:Name="endDateLabel">
-                        <Label x:Name="endDateDay" TextColor="Gray" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                        <Label x:Name="endDateMonth" TextColor="Gray" FontSize="35" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
-                        <Label x:Name="endDateTime" HorizontalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="125"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Frame Margin="8,15,8,15" Padding="0" CornerRadius="10" Grid.Column="0" Grid.Row="0" VerticalOptions="Center">
+                                <StackLayout Margin="00" Orientation="Vertical" Spacing="0">
+                                    <StackLayout Margin="0" BackgroundColor="#E8574F" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                        <Label Margin="20,2,20,2" x:Name="endDateDay" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    </StackLayout>
+                                    <StackLayout Margin="0" BackgroundColor="#FAFAFA" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Spacing="0">
+                                        <Label Margin="20,2,20,2" x:Name="endDateMonth"  TextColor="#585858" FontSize="35" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                        <Label Margin="20,2,20,2" x:Name="endDateTime" TextColor="#E8574F" HorizontalOptions="Center" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
                     </StackLayout>
                 </StackLayout>
-
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Description:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                    <Label x:Name="descriptionLabel" FontSize="18" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
+                </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="1">
                     <Label Text="Participants:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                     <Label x:Name="howManyLabel" FontSize="18" TextColor="Gray" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
@@ -92,13 +129,13 @@
                     </Label>
                 </StackLayout>
 
-                <Label Text="Meeting place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                <Label x:Name="meetlabel" IsVisible="False" Text="Meeting place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                 <StackLayout Margin="15,0,15,0" x:Name="meetStack"></StackLayout>
                 <Button x:Name="GetDirectionMeetingButton" Text="Get direction to the meeting place" Clicked="GetDirectionMeetingButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
-                <Label Text="Event place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
+                <Label x:Name="eventlabel" IsVisible="False" Text="Event place:" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"/>
                 <StackLayout Margin="15,0,15,0" x:Name="eventStack"></StackLayout>
                 <Button x:Name="GetDirectionPlaceButton" Text="Get direction to the event place" Clicked="GetDirectionPlaceButton_Clicked" Style="{StaticResource NormalButtonStyle}"></Button>
-                
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

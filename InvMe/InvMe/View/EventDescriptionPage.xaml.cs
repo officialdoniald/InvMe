@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -170,6 +171,8 @@ namespace InvMe.View
                     {
                         eventTownLabel.Text = "Online";
 
+                        meetlabel.IsVisible = false;
+                        eventlabel.IsVisible = false;
                         eventStack.IsVisible = false;
                         meetStack.IsVisible = false;
                         GetDirectionMeetingButton.IsVisible = false;
@@ -177,6 +180,8 @@ namespace InvMe.View
                     }
                     else
                     {
+                        meetlabel.IsVisible = true;
+                        eventlabel.IsVisible = true;
                         eventTownLabel.Text = ThisEvent.TOWN + ", " + ThisEvent.PLACE;
 
                         Position ppos = new Position(Convert.ToDouble(ThisEvent.PLACECORD.Split(';')[0]),
@@ -223,6 +228,15 @@ namespace InvMe.View
                             MapSpan.FromCenterAndRadius(
                                 mpos, Distance.FromMiles(1.0)));
                         meetPlaceMap.IsShowingUser = true;
+                    }
+
+                    if (string.IsNullOrEmpty(ThisEvent.DESCRIPTION))
+                    {
+                        descriptionLabel.Text = "-";
+                    }
+                    else
+                    {
+                        descriptionLabel.Text = ThisEvent.DESCRIPTION;
                     }
 
                     howMany = attendedToThisEvent.Count;
