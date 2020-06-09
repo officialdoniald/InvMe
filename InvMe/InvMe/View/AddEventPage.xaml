@@ -8,6 +8,7 @@
         <ScrollView>
             <StackLayout Spacing="10">
                 <Entry x:Name="eventNameEntry" Style="{StaticResource NormalEntryStyle}" Placeholder="Event"></Entry>
+                <Editor x:Name="descriptionEditor" Placeholder="Description" Style="{StaticResource NormalEditorStyle}"></Editor>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Grid.Column="0" Text="No matter how long:" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch Grid.Column="1" x:Name="nomatterHowLong" Toggled="NomatterHowLong_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
@@ -35,9 +36,6 @@
                 <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                     <Label Grid.Column="0" Text="Online event:" Style="{StaticResource NormalLabelStyle}" VerticalOptions="Center"></Label>
                     <Switch x:Name="onlineEventSwitch" Grid.Column="1" Toggled="OnlineEventSwitch_Toggled" VerticalOptions="Center" HorizontalOptions="EndAndExpand"></Switch>
-                </StackLayout>
-                <StackLayout>
-                    <Editor x:Name="descriptionEditor" Placeholder="Description" Style="{StaticResource NormalEditorStyle}"></Editor>
                 </StackLayout>
                 <StackLayout x:Name="mapStackLayout">
                     <Entry x:Name="eventTownEntry" Placeholder="Town" Style="{StaticResource NormalEntryStyle}"></Entry>

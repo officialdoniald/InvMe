@@ -29,6 +29,7 @@
             <ListView HasUnevenRows="True" SeparatorColor="Transparent" ItemsSource="{Binding Bindablehashtags}" IsPullToRefreshEnabled="True" Refreshing="HashtagsListView_Refreshing" x:Name="hashtagsListView" ItemTapped="HashtagsListView_ItemTapped">
                 <ListView.Header>
                     <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Style="{StaticResource NormalEntryStyle}" HorizontalOptions="Center" TextColor="Gray" Text="You can add any filters and you will be notified by E-Mail if similar events are created."/>
                         <Label x:Name="joinedEventNoItemLabel" Text="No item found..." HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Style="{StaticResource NormalLabelStyle}"></Label>
                     </StackLayout>
                 </ListView.Header>

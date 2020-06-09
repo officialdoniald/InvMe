@@ -112,6 +112,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CustomRenderers\CustomEditorRenderer.cs" />
     <Compile Include="CustomRenderers\CustomEntryRenderer.cs" />
     <Compile Include="CustomRenderers\ExtendedViewCellRenderer.cs" />
     <Compile Include="Main.cs" />

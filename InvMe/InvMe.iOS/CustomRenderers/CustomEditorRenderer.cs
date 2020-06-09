@@ -3,12 +3,12 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(Entry), typeof(CustomEntryRenderer))]
+[assembly: ExportRenderer(typeof(Editor), typeof(CustomEditorRenderer))]
 namespace InvMe.iOS.CustomRenderers
 {
-    public class CustomEntryRenderer : EntryRenderer
+    public class CustomEditorRenderer : EditorRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
         {
             base.OnElementChanged(e);
 
