@@ -150,8 +150,6 @@ namespace InvMe.View
 
         private async void GetUserLocation()
         {
-            var userpos = await PermissonCheck();
-
             Device.BeginInvokeOnMainThread(() =>
             {
                 map = new Xamarin.Forms.Maps.Map()
@@ -167,7 +165,12 @@ namespace InvMe.View
                     HeightRequest = 200,
                     MapType = MapType.Street
                 };
+            });
 
+            var userpos = await PermissonCheck();
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
                 map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
                 map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(userpos.Latitude, userpos.Longitude), Distance.FromMeters(300)));
 
@@ -223,7 +226,8 @@ namespace InvMe.View
 
                         if (location != null)
                         {
-                            Device.BeginInvokeOnMainThread(()=> {
+                            Device.BeginInvokeOnMainThread(() =>
+                            {
                                 map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(300)));
                                 map2.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(location.Latitude, location.Longitude), Distance.FromMeters(300)));
                             });
