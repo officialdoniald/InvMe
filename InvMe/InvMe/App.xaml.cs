@@ -49,8 +49,17 @@ namespace InvMe
 
         private void GlobalEvents_OnNoificationClicked(object sender, Events e)
         {
-            GlobalVariables.NotificationEvents = e;
-            GlobalVariables.NeedToNavigateToEventFromNotification = true;
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                Device.BeginInvokeOnMainThread(async () => {
+                    await App.Current.MainPage.Navigation.PushAsync(new EventDescriptionPage(e));
+                });
+            }
+            else
+            {
+                GlobalVariables.NotificationEvents = e;
+                GlobalVariables.NeedToNavigateToEventFromNotification = true;
+            }
         }
 
         public static void DisplayPopUp(string message)
