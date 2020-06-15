@@ -28,6 +28,10 @@ namespace InvMe.View
 
             App.SetRootPage(page);
 
+            Device.BeginInvokeOnMainThread(()=> {
+                GlobalEvents.OnLogoff_Event(this, null);
+            });
+
             DisableEnableButtons(true);
         }
 

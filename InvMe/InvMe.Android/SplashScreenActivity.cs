@@ -10,7 +10,7 @@ using Android.Widget;
 
 namespace InvMe.Droid
 {
-    [Activity(Label = "InvMe!", Icon = "@drawable/icon", Theme = "@style/MainTheme", NoHistory = false, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "InvMe!", Icon = "@drawable/icon", Theme = "@style/MainTheme", NoHistory = false, MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.Portrait, LaunchMode = LaunchMode.SingleTop)]
     public class SplashScreenActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

@@ -9,7 +9,7 @@ namespace BLL
     {
         public static string WebApiURL { get; set; }
 
-
+        public static string StoredNotiToken { get; set; } = "NOTITOKEN";
         public static string SourceSelectedImageFromGallery { get; set; }
 
         public static User ActualUser { get; set; }
@@ -39,5 +39,9 @@ namespace BLL
         public static string DateFormatForEventsList { get; set; } = "MMM dd. HH:mm";
 
         public static string DateFormatForEventsAddAndDescription { get; set; } = "dddd, MMM dd yyyy HH:mm zzz";
+
+        public static Events NotificationEvents { get; set; } = null;
+
+        public static bool NeedToNavigateToEventFromNotification { get; set; } = false;
     }
 }

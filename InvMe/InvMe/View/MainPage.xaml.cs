@@ -73,6 +73,15 @@ namespace InvMe.View
                 Children.Add(navigationUploadPhotoPage);
                 Children.Add(navigationMyAccountPage);
             });
+
+            if (GlobalVariables.NeedToNavigateToEventFromNotification)
+            {
+                Device.BeginInvokeOnMainThread(async () => {
+                    await Navigation.PushAsync(new EventDescriptionPage(GlobalVariables.NotificationEvents));
+                });
+
+                GlobalVariables.NeedToNavigateToEventFromNotification = false;
+            }
         }
     }
 }

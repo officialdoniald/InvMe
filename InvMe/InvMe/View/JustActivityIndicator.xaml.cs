@@ -1,4 +1,5 @@
 ﻿using BLL;
+using BLL.Helper;
 using BLL.Xamarin.Helper;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -21,11 +22,6 @@ namespace InvMe.View
             InitializeComponent();
 
             isEmpty = facebookOrLogin;
-        }
-
-        public JustActivityIndicator(bool connection)
-        {
-            InitializeComponent();
         }
 
         protected override void OnAppearing()
